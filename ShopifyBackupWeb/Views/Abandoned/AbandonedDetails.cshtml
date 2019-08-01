@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@section Scripts {
+    <script asp-src-include="~/theme/assets/js/plugins/angular/angular.js" asp-append-version="true"></script>
+    <script asp-src-include="~/theme/assets/js/plugins/angular/ui-bootstrap-tpls.js" asp-append-version="true"></script>
+    <script asp-src-include="~/areas/shopify/js/AbandonedDetails.js" asp-append-version="true"></script>
+    <script asp-src-include="~/js/angular.custom.js" asp-append-version="true"></script>
+
+}
+<div ng-controller="detailsCtr" ng-app="crewcloud">
+    <div class="widget-content row">
+        <div class="widget-content col-md-8">
+            <div>Checkout details</div>
+            <!--Item-->
+            <div class="basic-info" ng-repeat="item in listItem.line_items">
+                <p class="data-row">
+                    <!--Image-->
+                    <span>
+                        {{item.Image}}
+                    </span>
+                    <!--Title-->
+                    <span class="col-12">
+                        {{item.title}}
+                    </span>
+
+                    <!--Total-->
+                    <span>
+                        {{item.variant_price}}
+                    </span>
+                </p>
+                <p class="data-row">
+                    <!--Variant Title-->
+                    <span>
+                        {{item.variant_title}}
+                    </span>
+                </p>
+
+                <hr>
+
+            </div>
+        </div>
+        <!--Area right-->
+        <div class="widget-content col-md-4 basic-info">
+            <div>
+                <h6>Customer</h6>
+                <p>{{itemDetails.shipping_address.first_name}}</p>
+                <p>{{itemDetails.shipping_address.last_name}}</p>
+            </div>
+            <div>
+                <h6>Contacts Finformation</h6>
+                <p>{{itemDetails.email}}</p>
+            </div>
+            <div>
+                <h6>SHIPPING ADDRESS</h6>
+                <p>{{itemDetails.shipping_address.firstName}}{{itemDetails.shipping_address.lastName}}</p>
+                <p>{{itemDetails.shipping_address.company}}</p>
+                <p>{{itemDetails.shipping_address.last_name}}</p>
+                <p>{{itemDetails.shipping_address.last_name}}</p>
+                <p>{{itemDetails.shipping_address.city}}</p>
+                <p>{{itemDetails.shipping_address.country}}</p>
+                <p>{{itemDetails.shipping_address.phone}}</p>
+
+            </div>
+        </div>
+    </div>
+        
+    </div>

@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "Home Page";
+}
+@section Scripts {
+    <script asp-src-include="~/theme/assets/js/plugins/angular/angular.js" asp-append-version="true"></script>
+    <script asp-src-include="~/theme/assets/js/plugins/angular/ui-bootstrap-tpls.js" asp-append-version="true"></script>
+    <script asp-src-include="~/areas/shopify/js/index.js" asp-append-version="true"></script>
+    
+}
+    <script type="text/javascript">
+        var apiUrl ="localhost";
+        </script>
+<div ng-app="crewcloud" class="content" ng-controller="mainCtr">
+    <button ng-click="ExportExcel()">Export Excel</button>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+
+                <tr>
+                    <th width="35px">
+                        <label class="fancy-checkbox">
+                            <input type="checkbox" id="chkall" ng-model="selectedAll.value" ng-click="CheckAll();" />
+                            <span></span>
+                        </label>
+                    </th>
+                    <th>#</th>
+                    <th>Firstname</th>
+                    <th>Customer</th>
+                    <th>Payment</th>
+                    <th>Fulfillment</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in listOrder" >
+                    <td width="35px">
+                        <label class="fancy-checkbox">
+                            <input type="checkbox" no="{{item.Seq}}" ng-model="item.checkvalue" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td>{{item.order }}</td>
+                    <td>{{item.date }}</td>
+                    <td><a href="/Home/Details?id={{item.id}}">{{item.customer}}</a></td>
+                    <td>{{item. payment }}</td>
+                    <td>{{item.fulfillment }}</td>
+                    <td>${{item.total}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "Home Page";
+}
+@section Scripts {
+    <script asp-src-include="~/theme/assets/js/plugins/angular/angular.js" asp-append-version="true"></script>
+    <script asp-src-include="~/theme/assets/js/plugins/angular/ui-bootstrap-tpls.js" asp-append-version="true"></script>
+    <script asp-src-include="~/areas/shopify/js/register.js" asp-append-version="true"></script>
+
+}
+<script type="text/javascript">
+        var apiUrl ="localhost";
+</script>
+<div ng-app="crewcloud" class="content" ng-controller="mainCtr">
+    <div class="row">
+        <span><label>Username:</label><input class="input form-control" type="text" ng-model="User" /></span>
+    </div>
+    <div class="row">
+        <span><label>Password:</label><input class="input form-control" type="password" ng-model="Password" /></span>
+    </div>
+    <div class="row">
+        <span><label>Shop:</label><input class="input form-control" type="text" ng-model="Shop" /></span>
+    </div>
+    <div class="row">
+        <span><label>AppId:</label><input class="input form-control" type="text" ng-model="AppId" /></span>
+    </div>
+    <div class="row">
+        <span><label>AppPass:</label><input class="input form-control" type="text" ng-model="AppPass" /></span>
+    </div>
+    <div class="row">
+        <center><button class="btn btn-primary mt-4" ng-click="Register()">Register</button></center>
+    </div>
+</div>
+

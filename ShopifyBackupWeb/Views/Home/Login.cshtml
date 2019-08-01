@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+@section Scripts {
+    <script asp-src-include="~/theme/assets/js/plugins/angular/angular.js" asp-append-version="true"></script>
+    <script asp-src-include="~/theme/assets/js/plugins/angular/ui-bootstrap-tpls.js" asp-append-version="true"></script>
+    <script asp-src-include="~/areas/shopify/js/Login.js" asp-append-version="true"></script>
+    <script asp-src-include="~/js/angular.custom.js" asp-append-version="true"></script>
+
+}
+<div ng-controller="mainCtr" ng-app="crewcloud">
+    <div>
+        <div class="row">
+            <span><label>Username:</label><input class="input form-control" type="text" ng-model="User" /></span>
+        </div>
+        <div class="row">
+            <span><label>Password:</label><input class="input form-control" type="password" ng-model="Password"/></span>
+        </div>
+        <div class="row">
+            <center><button class="btn btn-primary mt-4" ng-click="Login()">Login</button></center>
+        </div>
+        <a href="/Home/Register">I don't have an account</a>
+    </div>
+        
+</div>
+
+

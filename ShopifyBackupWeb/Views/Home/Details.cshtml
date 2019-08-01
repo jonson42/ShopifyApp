@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Scripts {
+    <script asp-src-include="~/theme/assets/js/plugins/angular/angular.js" asp-append-version="true"></script>
+    <script asp-src-include="~/theme/assets/js/plugins/angular/ui-bootstrap-tpls.js" asp-append-version="true"></script>
+    <script asp-src-include="~/areas/shopify/js/Details.js" asp-append-version="true"></script>
+    <script asp-src-include="~/js/angular.custom.js" asp-append-version="true"></script>
+
+}
+<div ng-controller="detailsCtr" ng-app="crewcloud" >
+    <div class="row mb-4">
+    <a href="/Refund" class="float-lg-right "><i class="fa fa-reply"></i>Refund</a>
+    </div>
+    <div class="row">
+        <div class="widget-content col-md-8">
+
+            <!--Item-->
+            <div class="row mb-4" ng-repeat="item in itemDetails.line_items">
+                <!--Image-->
+
+                <div class="col-md-3">
+                    <img src="{{item.image}}" style="width: 76px;height: 73px;"/>
+                </div>
+                <!--Name-->
+                <div class="col-md-4">
+                    {{item.name}}
+                </div>
+                <!--Price-->
+                <div class="col-md-2">
+                    <span>${{item.price}}x{{item.quantity}}</span>
+                </div>
+                <!--Total-->
+                <div class="col-md-3">
+                    <span>${{itemDetails.total_price}}</span>
+                </div>
+                <hr />
+            </div>
+            <div class="widget-content" ng-show="flagTracking">
+                <hr />
+                <span><label>TRACKING INFORMATION (OPTIONAL)</label></span>
+                <div class="row mt-4">
+                    <div class="col-5">
+                        <span><label>Tracking number</label><input autocomplete="off" class="input form-control" ng-model="trackingNumber"></span>
+                    </div>
+                    <div class="col-5">
+                        <span>
+                            <label>Shipping carrier</label>
+                            <select value="None" class="form-control input-sm" ng-model="trackingCarrier">
+                                <option value="4PX">None</option>
+                                <option value="4PX">4PX</option>
+                                <option value="APC">APC</option>
+                                <option value="Amazon Logistics UK">Amazon Logistics UK</option>
+                                <option value="Amazon Logistics US">Amazon Logistics US</option>
+                                <option value="Australia Post">Australia Post</option>
+                                <option value="Bluedart">Bluedart</option>
+                                <option value="Canada Post">Canada Post</option>
+                                <option value="China Post">China Post</option>
+                                <option value="Correios">Correios</option>
+                                <option value="DHL Express">DHL Express</option>
+                                <option value="DHL eCommerce">DHL eCommerce</option>
+                                <option value="DHL eCommerce Asia">DHL eCommerce Asia</option>
+                                <option value="DPD">DPD</option>
+                                <option value="DPD Local">DPD Local</option>
+                                <option value="DPD UK">DPD UK</option>
+                                <option value="Delhivery">Delhivery</option>
+                                <option value="Eagle">Eagle</option>
+                                <option value="FSC">FSC</option>
+                                <option value="FedEx">FedEx</option>
+                                <option value="FedEx UK">FedEx UK</option>
+                                <option value="GLS">GLS</option>
+                                <option value="Globegistics">Globegistics</option>
+                                <option value="Japan Post (EN)">Japan Post (EN)</option>
+                                <option value="Japan Post (JA)">Japan Post (JA)</option>
+                                <option value="La Poste">La Poste</option>
+                                <option value="New Zealand Post">New Zealand Post</option>
+                                <option value="Newgistics">Newgistics</option>
+                                <option value="PostNL">PostNL</option>
+                                <option value="PostNord">PostNord</option>
+                                <option value="Purolator">Purolator</option>
+                                <option value="Royal Mail">Royal Mail</option>
+                                <option value="SF Express">SF Express</option>
+                                <option value="Sagawa (EN)">Sagawa (EN)</option>
+                                <option value="Sagawa (JA)">Sagawa (JA)</option>
+                                <option value="Singapore Post">Singapore Post</option>
+                                <option value="TNT">TNT</option>
+                                <option value="UPS">UPS</option>
+                                <option value="USPS">USPS</option>
+                                <option value="Whistl">Whistl</option>
+                                <option value="Yamato (EN)">Yamato (EN)</option>
+                                <option value="Yamato (JA)">Yamato (JA)</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+                <div class="row ml-1 mt-2">
+                    <span><label>Tracking URL</label><input autocomplete="off" class="input form-control" ng-model="trackingUrl"></span>
+                </div>
+            </div>
+
+            <div class="col-sm-offset-3 col-sm-3 mt-3">
+                <button type="submit" class="btn btn-primary btn-block" ng-click="MarkFulfiel();" ng-disabled="flagMark">Mark as fulfilled</button>
+            </div>
+        </div>
+        <!--Area right-->
+        <div class="widget-content col-md-4 basic-info">
+            <div>
+                <h6>Customer</h6>
+                <p>{{itemDetails.shipping_address.first_name}}</p>
+                <p>{{itemDetails.shipping_address.last_name}}</p>
+            </div>
+            <div>
+                <h6>Contacts Finformation</h6>
+                <p>{{itemDetails.email}}</p>
+            </div>
+            <div>
+                <h6>SHIPPING ADDRESS</h6>
+                <p>{{itemDetails.shipping_address.firstName}}{{itemDetails.shipping_address.lastName}}</p>
+                <p>{{itemDetails.shipping_address.company}}</p>
+                <p>{{itemDetails.shipping_address.last_name}}</p>
+                <p>{{itemDetails.shipping_address.last_name}}</p>
+                <p>{{itemDetails.shipping_address.city}}</p>
+                <p>{{itemDetails.shipping_address.country}}</p>
+                <p>{{itemDetails.shipping_address.phone}}</p>
+
+            </div>
+        </div>
+
+        </div>
+    </div>

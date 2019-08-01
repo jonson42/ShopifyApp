@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Import Page";
+}
+@section Scripts {
+    
+    <script asp-src-include="~/theme/assets/js/plugins/angular/angular.js" asp-append-version="true"></script>
+    <script asp-src-include="~/theme/assets/js/plugins/ng-file-upload/ng-file-upload.js" asp-append-version="true"></script>    
+<script asp-src-include="~/theme/assets/js/plugins/angular/ui-bootstrap-tpls.js" asp-append-version="true"></script>
+    <script asp-src-include="~/areas/shopify/js/Import.js" asp-append-version="true"></script>
+
+}
+<script type="text/javascript">
+        var apiUrl ="localhost";
+</script>
+<div ng-app="crewcloud" class="content" ng-controller="mainCtr">
+    <div class="input-group input-group-appendable col-md-4" id="input-group-appendable1">
+        <input autocomplete="off" class="input form-control" ng-model="fileName" name="field1" type="text" disabled>
+        <span class="input-group-btn">
+            <button class="btn btn-primary add-more" type="file" file-model="fileUpload" ngf-select="uploadFiles($files)" multiple="multiple">Import</button>
+        </span>
+    </div>
+    <!--Table import-->
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+
+                <tr>
+                    <th>Image</th>
+                    <th>VariantTitle</th>
+                    <th>Quantity</th>
+                    <th>Order</th>
+                    <th>Phone</th>
+                    <th>SKU</th>
+                    <th>EMail</th>
+                    <th>ProductName</th>
+                    <th>OrderNotes</th>
+                    <th>City</th>
+                    <th>Country</th>
+                    <th>Province</th>
+                    <th>Zip</th>
+                    <th>Address</th>
+                    <th>ShippingFullname</th>
+                    <th>ProvinceCode</th>
+                    <th>AddressFull</th>
+                    <th>CountryCode</th>
+                    <th>Transaction Card</th>
+                    <th>PayPal TransactionId</th>
+                    <th>Tracking</th>
+                    <th>TrackingUrl</th>
+                    <th>Carrer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in listExcel">
+                    <td>{{item.image}}</td>
+                    <td>{{item.variantTitle}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.order}}</td>
+                    <td>{{item.phone}}</td>
+                    <td>{{item.sKU}}</td>
+                    <td>{{item.eMail}}</td>
+                    <td>{{item.productName}}</td>
+                    <td>{{item.orderNotes}}</td>
+                    <td>{{item.city}}</td>
+                    <td>{{item.country}}</td>
+                    <td>{{item.province}}</td>
+                    <td>{{item.zip}}</td>
+                    <td>{{item.address}}</td>
+                    <td>{{item.shippingFullname}}</td>
+                    <td>{{item.provinceCode}}</td>
+                    <td>{{item.addressFull}}</td>
+                    <td>{{item.countryCode}}</td>
+                    <td>{{item.transactionCard}}</td>
+                    <td>{{item.payPalTransactionId}}</td>
+                    <td>{{item.tracking}}</td>
+                    <td>{{item.trackingUrl}}</td>
+                    <td>{{item.carrer}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <button id="btn1" class="btn btn-primary" type="button" >Full field</button>
+</div>

@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Home Redirect";
+}
+@section Scripts {
+    <script asp-src-include="~/theme/assets/js/plugins/angular/angular.js" asp-append-version="true"></script>
+    <script asp-src-include="~/theme/assets/js/plugins/angular/ui-bootstrap-tpls.js" asp-append-version="true"></script>
+    <script asp-src-include="~/areas/shopify/js/Redirect.js" asp-append-version="true"></script>
+
+}
+<script type="text/javascript">
+        var apiUrl ="localhost";
+</script>
+<div ng-app="crewcloud" class="content" ng-controller="mainCtr">
+    <div class="row">
+        <!--Host main-->
+        <div class="col-md-3">
+            <span class="row">
+                <label class="mr-3">Host</label><input type="text" value="products/" disabled />
+                <span class="input-group-btn">
+                    <button id="btn1" class="btn btn-primary add-more" type="button" ng-click="AddHost()">+</button>
+                </span>
+            </span>
+            <div class="data-row">
+                <div class="input-group input-group-appendable mt-4" id="input-group-appendable1" ng-repeat="itemHost in HostList track by $index">
+                    <input autocomplete="off" class="input form-control" id="field1" name="field1" type="text" ng-model="itemHost.name">
+                    <span class="input-group-btn">
+                        <button id="btn1" class="btn btn-primary add-more" type="button" ng-click="RemoveLink($index,0)">-</button>
+                    </span>
+                </div>
+            </div>
+            <button class="btn btn-primary mt-4" ng-click="SaveHost()">Save</button>
+        </div>
+        <!--Collection -->
+        <div class="col-md-5">
+            <span class="row">
+                <label class="mr-3">Collection</label><input type="text" value="products/" disabled />
+                <span class="input-group-btn">
+                    <button id="btn1" class="btn btn-primary add-more" type="button" ng-click="AddCollection()">+</button>
+                </span>
+            </span>
+            <div class="data-row col-md-6">
+                <div class="input-group input-group-appendable mt-4" id="input-group-appendable1" ng-repeat="itemCollection in CollectionList track by $index">
+                    <input autocomplete="off" class="input form-control" id="field1" name="field1" type="text" ng-model="itemCollection.name">
+                    <span class="input-group-btn">
+                        <button id="btn1" class="btn btn-primary add-more" type="button" ng-click="RemoveColection($index,0)">-</button>
+                    </span>
+                </div>
+            </div>
+            <button class="btn btn-primary mt-4" ng-click="SaveCollection()">Save Collection</button>
+        </div>
+        <!--Site -->
+        <div class="col-md-4">
+            <span class="row">
+                <label class="mr-3">Collection</label><input type="text" value="products/" disabled />
+                <span class="input-group-btn">
+                    <button id="btn1" class="btn btn-primary add-more" type="button" ng-click="AddCollection()">+</button>
+                </span>
+            </span>
+            <div class="data-row col-md-6">
+                <div class="input-group input-group-appendable mt-4" id="input-group-appendable1" ng-repeat="itemCollection in CollectionList track by $index">
+                    <input autocomplete="off" class="input form-control" id="field1" name="field1" type="text" ng-model="itemCollection.name">
+                    <span class="input-group-btn">
+                        <button id="btn1" class="btn btn-primary add-more" type="button" ng-click="RemoveColection($index,0)">-</button>
+                    </span>
+                </div>
+            </div>
+            <button class="btn btn-primary mt-4" ng-click="SaveCollection()">Save Collection</button>
+        </div>
+    </div>
+   
+</div>

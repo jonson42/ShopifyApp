@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Abandoned Page";
+}
+@section Scripts {
+    <script asp-src-include="~/theme/assets/js/plugins/angular/angular.js" asp-append-version="true"></script>
+    <script asp-src-include="~/theme/assets/js/plugins/angular/ui-bootstrap-tpls.js" asp-append-version="true"></script>
+    <script asp-src-include="~/areas/shopify/js/Abandoned.js" asp-append-version="true"></script>
+
+}
+<script type="text/javascript">
+        var apiUrl ="localhost";
+</script>
+<div ng-app="crewcloud" class="content" ng-controller="mainCtr">
+    <!--table Abandoned-->
+    
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th width="35px">
+                        <label class="fancy-checkbox">
+                            <input type="checkbox" id="chkall" ng-model="selectedAll.value" ng-click="CheckAll();" />
+                            <span></span>
+                        </label>
+                    </th>
+                    <th>Checkout</th>
+                    <th>Date</th>
+                    <th>PlacedBy</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in listAbandoned">
+                    <td width="35px">
+                        <label class="fancy-checkbox">
+                            <input type="checkbox" no="{{item.Seq}}" ng-model="item.checkvalue" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td><a href="/Abandoned/AbandonedDetails?id={{item.id}}">{{item.name}}</td>
+                    <td>{{item.created_at}}</td>
+                    <td>{{item.customer.first_name+item.customer.last_name}}</td>
+                    <td>${{item.total_price}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+     
+</div>

@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Scripts {
+    <script asp-src-include="~/theme/assets/js/plugins/angular/angular.js" asp-append-version="true"></script>
+    <script asp-src-include="~/theme/assets/js/plugins/angular/ui-bootstrap-tpls.js" asp-append-version="true"></script>
+    <script asp-src-include="~/areas/shopify/js/Refund.js" asp-append-version="true"></script>
+    <script asp-src-include="~/js/angular.custom.js" asp-append-version="true"></script>
+
+}
+<div ng-controller="mainCtr" ng-app="crewcloud">
+    <div class="row">
+        <div class="row widget-content col-md-8">
+            <!--Item-->
+            <div class="row mb-4" ng-repeat="item in itemDetails.line_items">
+                <!--Image-->
+
+                <div class="col-md-3">
+                    {{item.Image}}
+                </div>
+                <!--Name-->
+                <div class="col-md-4">
+                    {{item.name}}
+                </div>
+                <!--Price-->
+                <div class="col-md-2">
+                    <span>${{item.price}}x{{item.quantity}}</span>
+                </div>
+                <!--Total-->
+                <div class="col-md-3">
+                    <span>${{itemDetails.total_price}}</span>
+                </div>
+                <hr />
+            </div>
+            <div class="row">
+                <h6>Refund shipping</h6>
+                <p><label>Shipping rate:</label></p>
+                <p>Refund amount</p>
+                <input class="form-control" />
+            </div>
+            <div>
+                <h6>Reason for refund</h6>
+                <input class="form-control" />
+                <span>Only you and other staff can see this reason.</span>
+            </div>
+        </div>
+        <div class="row widget-content col-md-4">
+            <h6>Summary</h6>
+            <p>Items subtotal<span>{{rate}}</span></p>
+            <p>Items subtotal<span>{{rate}}</span></p>
+            <p>Items subtotal<span>{{rate}}</span></p>
+            <p>Items subtotal<span>{{rate}}</span></p>
+            <h6>REFUND AMOUNT</h6>
+            <p>sTRIPE</p>
+            <input class="form-control" />
+            <span>{{}}available for refund</span>
+        </div>
+    </div>
+    
+</div>
