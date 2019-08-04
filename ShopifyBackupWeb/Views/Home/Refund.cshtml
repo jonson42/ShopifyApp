@@ -17,7 +17,7 @@
                 <!--Image-->
 
                 <div class="col-md-3">
-                    {{item.Image}}
+                    <img src="{{item.image}}" style="width: 76px;height: 73px;" />
                 </div>
                 <!--Name-->
                 <div class="col-md-4">
@@ -33,19 +33,19 @@
                 </div>
                 <hr />
             </div>
-            <div class="row">
-                <h6>Refund shipping</h6>
-                <p><label>Shipping rate:</label></p>
+            <div class="col-md-12" ng-repeat="itemShipping in itemDetails.shipping_lines">
+                <h6>Refund shipping</h6><br />
+                <p><label>Shipping rate:{{itemShipping.code}}({{itemShipping.discounted_price}})</label></p>
                 <p>Refund amount</p>
-                <input class="form-control" />
+                <input class="form-control" ng-change="ChangeMoney(this);" ng-model="moneyRefund"/>
             </div>
-            <div>
+            <div class="col-md-12">
                 <h6>Reason for refund</h6>
                 <input class="form-control" />
                 <span>Only you and other staff can see this reason.</span>
             </div>
         </div>
-        <div class="row widget-content col-md-4">
+        <div class="widget-content col-md-4">
             <h6>Summary</h6>
             <p>Items subtotal<span>{{rate}}</span></p>
             <p>Items subtotal<span>{{rate}}</span></p>
@@ -53,8 +53,12 @@
             <p>Items subtotal<span>{{rate}}</span></p>
             <h6>REFUND AMOUNT</h6>
             <p>sTRIPE</p>
-            <input class="form-control" />
+            <input class="form-control" ng-model="moneyRefund" />
             <span>{{}}available for refund</span>
+            <div>
+                <button class="btn btn-primary" ng-click="SendRefunds()">Refunds ${{moneyRefund}}</button>
+            </div>
+            
         </div>
     </div>
     

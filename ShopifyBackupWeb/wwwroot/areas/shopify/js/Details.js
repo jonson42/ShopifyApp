@@ -24,9 +24,9 @@ app.controller("detailsCtr", function ($scope, $ajax, $queryStr) {
     $scope.trackingCarrier = "";
     $scope.trackingUrl = "";
     $scope.flagMark = false;
-    var orderId = parseInt($queryStr.search().id);
+    $scope.orderId = parseInt($queryStr.search().id);
     $scope.GetDetails = function () {
-        $ajax.getDetails(orderId).then(function response(success) {
+        $ajax.getDetails($scope.orderId).then(function response(success) {
             $scope.itemDetails = success.data;
         }, function error(error) {
             console.log("Roi roi do");
