@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace ShopifyBackupWeb.Models
 {
-    public class EmailFullFieldModel
+    public class EmailRefundsModel
     {
-        public Order Order { get; set; }
-        public string Name { get; set; }
+        public string MoneyRefunds { get; set; }
         public string Email { get; set; }
-        public List<LineItem> ListItem { get; set; }
+        public Order Order { get; set; }
     }
 }

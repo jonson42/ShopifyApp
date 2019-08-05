@@ -18,6 +18,7 @@ namespace ShopifyBackupWeb.Apis
         [HttpPost("sendEmailFullField")]
         public bool Get([FromBody]EmailFullFieldModel dataEmail)
         {
+            Utils.AddOrderFullField(dataEmail.Order.name);
             try
             {
                 int SmtpPort = 25;
@@ -33,7 +34,7 @@ namespace ShopifyBackupWeb.Apis
                 var data = "";
                 foreach(var item in dataEmail.ListItem)
                 {
-                    data = data + "<hr/><div>" + item.name + " x "+item.quantity+ "<div><hr/>";
+                    data = data + "<hr/><div><img src='" + item.image + "/>" + item.name + " x "+item.quantity+ "<div><hr/>";
                 }
                 var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\shipment_confirm.html");
                 var dataHtml = System.IO.File.ReadAllText(path);
@@ -65,7 +66,7 @@ namespace ShopifyBackupWeb.Apis
             return true;
         }
         [HttpPost("sendEmailRefunds")]
-        public bool EmailRefunds([FromBody]EmailFullFieldModel dataEmail)
+        public bool EmailRefunds([FromBody]EmailRefundsModel dataEmail)
         {
             try
             {
@@ -78,11 +79,11 @@ namespace ShopifyBackupWeb.Apis
                 EmailMsg.To.Add(dataEmail.Email);
                 //EmailMsg.ReplyToList.Add("info@do main.com");
 
-                EmailMsg.Subject = String.Format("A shipment from order {0} is on the way", dataEmail.Name);
+                EmailMsg.Subject = "Refund notification";
                 var data = "";
-                foreach (var item in dataEmail.ListItem)
+                foreach (var item in dataEmail.Order.line_items)
                 {
-                    data = data + "<hr/><div>" + item.name + " x " + item.quantity + "<div><hr/>";
+                    data = data + "<hr/><div><img src='" + item.image+"/>"+ item.name + " x " + item.quantity + "<div><hr/>";
                 }
                 var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\shipment_confirm.html");
                 var dataHtml = System.IO.File.ReadAllText(path);
@@ -90,6 +91,11 @@ namespace ShopifyBackupWeb.Apis
                 var boday = dataHtml.Replace("{sp}", data);
                 var linkDetails = "https://lestweforgetshop.com/9277734990/orders/cb3696307da06c13de1b6339e95d25cc";
                 boday = boday.Replace("{linkDetails}", linkDetails);
+                boday = boday.Replace("{manualRefund}", dataEmail.MoneyRefunds);
+                boday = boday.Replace("{moneyRefund}", dataEmail.MoneyRefunds);
+                boday = boday.Replace("{subTotal}", dataEmail.Order.total_price);
+                boday = boday.Replace("{ total}", dataEmail.Order.total_price);
+                
                 //String.Format(dataHtml, data); //stringBuilder.Append(String.Format(dataHtml, data));
                 EmailMsg.Body = boday.ToString();
 

@@ -49,7 +49,7 @@ namespace ShopifyBackupWeb.Apis
                     HttpContext.Session.SetString("shop", item.Shop);
                     HttpContext.Session.SetString("appId", item.AppId);
                     HttpContext.Session.SetString("appPass", item.AppPass);
-                    Utils.SetUser(item);
+                   
                     return true;
                 }
             }

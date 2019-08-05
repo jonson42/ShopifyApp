@@ -46,7 +46,12 @@ app.controller("mainCtr", function ($scope, $ajax, $queryStr) {
 
     };
     $scope.SendRefunds = function () {
-        var dataEmail = [];
+        var dataEmail = {
+            MoneyRefunds: $scope.moneyRefund,
+            Order: $scope.itemDetails, 
+            Email: $scope.itemDetails.email
+        };
+
         $ajax.sendEmailRefunds(dataEmail).then(function response(success) {
             debugger;
         }, function error(error) {

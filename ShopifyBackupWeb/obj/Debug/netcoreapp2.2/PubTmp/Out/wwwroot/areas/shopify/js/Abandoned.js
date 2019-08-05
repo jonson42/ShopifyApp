@@ -28,7 +28,6 @@ app.controller("mainCtr", function ($scope, $ajax) {
     $scope.listAbandoned = [];
     $scope.List = function () {
         $ajax.getAbandoned().then(function response(success) {
-            debugger;
             $scope.listAbandoned = success.data;
             
         }, function error(error) {

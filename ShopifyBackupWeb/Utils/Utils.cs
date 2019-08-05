@@ -84,5 +84,39 @@ namespace ShopifyBackupWeb
 
             return result;
         }
+        public static List<String> GetOrderFullField()
+        {
+            String data = "";
+            var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot") + String.Format("\\Data\\{0}", "ListFullField.json");
+            if (System.IO.File.Exists(path))
+            {
+                data = System.IO.File.ReadAllText(path);
+            }
+
+            var listOrder = new List<String>();
+            listOrder = JsonConvert.DeserializeObject<List<String>>(data);
+            return listOrder;
+        }
+        public static bool AddOrderFullField(String inparam)
+        {
+            try
+            {
+                var list = GetOrderFullField();
+                list.Add(inparam);
+                var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\ListFullField.json");
+                string value = JsonConvert.SerializeObject(list);
+                using (var tw = new StreamWriter(path, false))
+                {
+                    tw.WriteLine(value);
+                    tw.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            
+            return true;
+        }
     }
 }

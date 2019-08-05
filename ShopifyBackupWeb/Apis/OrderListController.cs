@@ -38,7 +38,15 @@ namespace ShopifyBackupWeb.Apis
                         orderModel.Date = item.created_at != null ? item.created_at.ToString() : "";
                         orderModel.Customer = item.customer != null && item.customer.first_name != null ? item.customer.first_name.ToString() : "";
                         orderModel.Payment = item.financial_status != null ? item.financial_status : "";
-                        orderModel.Fulfillment = "FullField";
+                        orderModel.Fulfillment = "UnFullField";
+                        foreach (var itemFullField in Utils.GetOrderFullField()) {
+                            if (orderModel.Order == itemFullField)
+                            {
+                                orderModel.Fulfillment = "FullField";
+                                break;
+                            }
+                        }
+                        
                         orderModel.Total = item.total_price != null ? item.total_price : "";
                         #endregion
                         //Show list excel

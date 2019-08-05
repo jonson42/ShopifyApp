@@ -10,6 +10,22 @@ app.service("$ajax", function ($http) {
         var temp = this.url + "getDefaultHost";
         return $http.get(temp);
     };
+    this.updateSite = function (listHost) {
+        var temp = this.url + "updateSite";
+        return $http.post(temp, listHost);
+    };
+    this.getSiteDefault = function () {
+        var temp = this.url + "getSiteDefault";
+        return $http.get(temp);
+    };
+    this.getCollectionDefault = function () {
+        var temp = this.url + "getCollectionDefault";
+        return $http.get(temp);
+    };
+    this.updateCollection = function (listCollection) {
+        var temp = this.url + "updateCollection";
+        return $http.post(temp, listCollection);
+    };
 });
 app.factory("$share", function ($rootScope) {
     return {
@@ -20,7 +36,8 @@ app.factory("$share", function ($rootScope) {
 
 app.controller("mainCtr", function ($scope, $ajax) {
     $scope.HostList = [];
-    
+    $scope.CollectionList = [];
+    $scope.SiteList = [];
     $scope.AddHost = function () {
         var item = {
             name: ""
@@ -48,5 +65,63 @@ app.controller("mainCtr", function ($scope, $ajax) {
                 alert("Save host error !");
         });
 
+    };
+
+    $scope.GetCollectionDefault = function () {
+        $ajax.getCollectionDefault().then(function response(success) {
+            if (success.data != "") {
+                $scope.CollectionList = success.data;
+            }
+        }, function error(error) {
+            console.log("Export error !");
+        });
+    };
+    $scope.GetCollectionDefault();
+    $scope.AddCollection = function () {
+        var item = {
+            name: ""
+        }
+        $scope.CollectionList.push(item);
+    };
+    $scope.SaveCollection = function () {
+        $ajax.updateCollection($scope.CollectionList).then(function response(success) {
+            alert("Save collection successfully !");
+        }, function error(error) {
+            alert("Save host error !");
+        });
+    };
+    
+    $scope.RemoveColection = function (index, indexHost) {
+        $scope.CollectionList.splice(index, 1);
+    };
+
+    $scope.GetSiteDefault = function () {
+        $ajax.getSiteDefault().then(function response(success) {
+            if (success.data != "") {
+                $scope.SiteList = success.data;
+            }
+        }, function error(error) {
+            console.log("Export error !");
+        });
+    };
+    $scope.GetSiteDefault();
+    $scope.AddSite = function () {
+        var item = {
+            site: "",
+            appId: "",
+            appPass: ""
+        }
+        $scope.SiteList.push(item);
+    };
+    $scope.SaveSite = function () {
+        $ajax.updateSite($scope.SiteList).then(function response(success) {
+            alert("Save collection successfully !");
+        }, function error(error) {
+            alert("Save host error !");
+        });
+    };
+
+    $scope.RemoveSite = function (index, indexHost) {
+        $scope.SiteList.splice(index, 1);
     };
 });
