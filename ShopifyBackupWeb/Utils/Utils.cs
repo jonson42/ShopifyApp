@@ -1,4 +1,5 @@
-﻿using ShopifyBackupWeb.Models;
+﻿using Newtonsoft.Json;
+using ShopifyBackupWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,23 +13,27 @@ namespace ShopifyBackupWeb
 {
     public static class Utils
     {
-        public static string User { get; set; }
-        public static string Password { get; set; }
-        public static string AppId { get; set; }
-        public static string AppPass { get; set; }
-        public static string Shop { get; set; }
+        public static List<ListSite> GetApp()
+        {
+            var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\Site.json");
+            var data = "";
+            if (System.IO.File.Exists(path))
+            {
+                data = System.IO.File.ReadAllText(path);
+            }
 
-        public static void SetUser(UserModel user)
-        {
-            User = user.User;
-            Password = user.Password;
-            AppId = user.AppId;
-            AppPass = user.AppPass;
-            Shop = user.Shop;
+            var listSite = new List<ListSite>();
+            listSite = JsonConvert.DeserializeObject<List<ListSite>>(data);
+            return listSite;
         }
-        public static string GetDataFromLink(string fileName,string nameItem)
+        public static string GetDataFromLink(string fileName,string nameItem, ListSite appModel)
         {
-            var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")+ String.Format("\\Data\\{0}\\{1}.json", Shop, fileName);
+            var directory = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot") + String.Format("\\Data\\{0}", appModel.Site);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+            var path = directory+ String.Format("\\{0}.json", fileName);
             if (!File.Exists(path))
             {
                 File.Create(path).Close();
@@ -40,11 +45,11 @@ namespace ShopifyBackupWeb
                 WebClient client = new WebClient();
                 client.UseDefaultCredentials = true;
 
-                client.Credentials = new NetworkCredential(AppId, AppPass);
-                string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(AppId + ":" + AppPass));
+                client.Credentials = new NetworkCredential(appModel.AppId, appModel.AppPass);
+                string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(appModel.AppId + ":" + appModel.AppPass));
                 client.Headers[HttpRequestHeader.Authorization] = string.Format(
                     "Basic {0}", credentials);
-                data = client.DownloadString(String.Format("https://{0}.myshopify.com/admin/api/2019-07/{1}.json", Shop, nameItem));
+                data = client.DownloadString(String.Format("https://{0}.myshopify.com/admin/api/2019-07/{1}.json", appModel.Site, nameItem));
                 using (var tw = new StreamWriter(path, false))
                 {
                     tw.WriteLine(data);

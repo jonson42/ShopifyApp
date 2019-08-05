@@ -15,27 +15,45 @@ namespace ShopifyBackupWeb.Apis
         [HttpGet("getAbandoned")]
         public List<Checkout> GetListAbandoned()
         {
+            var listCheckOut = new List<Checkout>();
             //link api :
-            var data = Utils.GetDataFromLink("List_Abandoned", "checkouts");
-            AbandonedModel abandonedModel = new AbandonedModel();
-            abandonedModel = JsonConvert.DeserializeObject<AbandonedModel>(data);
-            return abandonedModel.checkouts;
+            foreach (var itemSite in Utils.GetApp())
+            {
+                var data = Utils.GetDataFromLink("List_Abandoned", "checkouts",itemSite);
+                AbandonedModel abandonedModel = new AbandonedModel();
+                abandonedModel = JsonConvert.DeserializeObject<AbandonedModel>(data);
+                if (abandonedModel!=null&&abandonedModel.checkouts != null)
+                {
+                    foreach (var itemCheckOut in abandonedModel.checkouts)
+                    {
+                        listCheckOut.Add(itemCheckOut);
+                    }
+                }
+                
+            }
+            return listCheckOut;
         }
 
         [HttpGet("getAbandonedDetails")]
         public Checkout GetAbandonedDetails(string idProduct)
         {
-            //link api : 
-            var data = Utils.GetDataFromLink("List_Abandoned", "checkouts");
-            AbandonedModel abandonedModel = new AbandonedModel();
-            abandonedModel = JsonConvert.DeserializeObject<AbandonedModel>(data);
             Checkout itemCheck = new Checkout();
-            foreach (var item in abandonedModel.checkouts)
+            //link api : 
+            foreach (var itemSite in Utils.GetApp())
             {
-                if (item.id.ToString() == idProduct)
+                var data = Utils.GetDataFromLink("List_Abandoned", "checkouts", itemSite);
+                AbandonedModel abandonedModel = new AbandonedModel();
+                abandonedModel = JsonConvert.DeserializeObject<AbandonedModel>(data);
+                if (abandonedModel != null && abandonedModel.checkouts != null)
                 {
-                    itemCheck = item;
-                    break;
+                    foreach (var item in abandonedModel.checkouts)
+                    {
+                        if (item.id.ToString() == idProduct)
+                        {
+                            itemCheck = item;
+                            break;
+                        }
+                    }
                 }
             }
             return itemCheck;

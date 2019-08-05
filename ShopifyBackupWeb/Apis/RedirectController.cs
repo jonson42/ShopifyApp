@@ -80,6 +80,31 @@ namespace ShopifyBackupWeb.Apis
             listHost = JsonConvert.DeserializeObject<List<ListHost>>(data);
             return listHost;
         }
-
+        //Site: 
+        [HttpPost("updateSite")]
+        public string updateSite([FromBody]List<ListSite> inparam)
+        {
+            try
+            {
+                var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\Site.json");
+                string value = JsonConvert.SerializeObject(inparam);
+                using (var tw = new StreamWriter(path, false))
+                {
+                    tw.WriteLine(value);
+                    tw.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+            return "true";
+        }
+        //
+        [HttpGet("getSiteDefault")]
+        public List<ListSite> getSiteDefault()
+        {
+            return Utils.GetApp();
+        }
     }
 }
