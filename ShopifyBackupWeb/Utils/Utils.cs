@@ -13,6 +13,34 @@ namespace ShopifyBackupWeb
 {
     public static class Utils
     {
+        public static string GetImageUrl(string title,string varianId)
+        {
+            foreach (var itemSite in Utils.GetApp())
+            {
+                var product = Utils.GetDataFromLink("List_Product", "products", itemSite);
+                var productModel = JsonConvert.DeserializeObject<ProductModel>(product);
+                foreach (var itemProduct in productModel.products)
+                {
+                    foreach (var itemImage in itemProduct.images)
+                    {
+                        foreach (var itemVari in itemImage.variant_ids)
+                        {
+                            if (itemVari.ToString() == varianId)
+                            {
+                                return itemImage.src;
+                                break;
+                            }
+                        }
+                    }
+                        if (itemProduct.title == title)
+                        {
+                            return itemProduct.images[0].src;
+                        }
+
+                }
+            }
+                return "";
+        }
         public static List<ListSite> GetApp()
         {
             var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\Site.json");
@@ -95,6 +123,10 @@ namespace ShopifyBackupWeb
 
             var listOrder = new List<String>();
             listOrder = JsonConvert.DeserializeObject<List<String>>(data);
+            if (listOrder == null)
+            {
+                listOrder = new List<string>();
+            }
             return listOrder;
         }
         public static bool AddOrderFullField(String inparam)

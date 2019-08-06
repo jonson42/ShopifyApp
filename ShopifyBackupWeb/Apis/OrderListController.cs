@@ -54,7 +54,7 @@ namespace ShopifyBackupWeb.Apis
                         foreach (var itemSub in item.line_items)
                         {
                             var itemProduct = new ExcelExportModel();
-
+                            itemProduct.Image = Utils.GetImageUrl(itemSub.title, itemSub.variant_id.ToString());
                             itemProduct.Order = item.name;
                             itemProduct.VariantTitle = itemSub.variant_title != null ? itemSub.variant_title : "";
                             itemProduct.Quantity = itemSub.quantity != 0 ? itemSub.quantity.ToString() : "";
@@ -92,10 +92,7 @@ namespace ShopifyBackupWeb.Apis
             {
                 var data = Utils.GetDataFromLink("List_Order", "orders",itemSite);
                 ShopifyModel shopifyModel = new ShopifyModel();
-                var product = Utils.GetDataFromLink("List_Product", "products", itemSite);
                 shopifyModel = JsonConvert.DeserializeObject<ShopifyModel>(data);
-                
-                var productModel = JsonConvert.DeserializeObject<ProductModel>(product);
                 if (shopifyModel != null && shopifyModel.orders != null)
                 {
                     foreach (var item in shopifyModel.orders)
@@ -104,29 +101,7 @@ namespace ShopifyBackupWeb.Apis
                         {
                             foreach (var itemSub in item.line_items)
                             {
-                                foreach (var itemProduct in productModel.products)
-                                {
-                                    foreach (var itemImage in itemProduct.images)
-                                    {
-                                        foreach (var itemVari in itemImage.variant_ids)
-                                        {
-                                            if (itemVari.ToString() == itemSub.variant_id.ToString())
-                                            {
-                                                itemSub.image = itemImage.src;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    if (itemSub.image == null)
-                                    {
-                                        if (itemProduct.title == itemSub.title)
-                                        {
-                                            itemSub.image = itemProduct.images[0].src;
-                                        }
-                                    }
-
-                                }
-
+                                itemSub.image = Utils.GetImageUrl(itemSub.title, itemSub.variant_id.ToString());
                             }
                             result = item;
                             break;

@@ -44,7 +44,8 @@ app.controller("detailsCtr", function ($scope, $ajax, $queryStr) {
             var dataEmail = {
                 name: $scope.itemDetails.name,
                 email: $scope.itemDetails.email,
-                listItem: $scope.itemDetails.line_items
+                listItem: $scope.itemDetails.line_items,
+                Order: $scope.itemDetails;
             }
             $ajax.sendEmailFullField(dataEmail).then(function response(success) {
                 debugger;
@@ -53,8 +54,6 @@ app.controller("detailsCtr", function ($scope, $ajax, $queryStr) {
             });
             //location.href = "/";
             $scope.flagMark = true;
-
         }
-        
     }
 });

@@ -45,8 +45,8 @@ app.controller("detailsCtr", function ($scope, $ajax, $queryStr) {
                 name: $scope.itemDetails.name,
                 email: $scope.itemDetails.email,
                 listItem: $scope.itemDetails.line_items,
-                Order: $scope.itemDetails;
-            }
+                Order: $scope.itemDetails
+            };
             $ajax.sendEmailFullField(dataEmail).then(function response(success) {
                 debugger;
             }, function error(error) {

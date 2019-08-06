@@ -16,7 +16,6 @@
   <center>
       <div>
           <h1>
-				{shopName}
           </h1>
           <h2>
               Your order has been refunded
@@ -27,22 +26,22 @@
       </div>
        <hr/>
 	   <h1>Order summary</h1>
-	    {listItem}
+	    {sp}
 		<div>
-		     <span>Subtotal</span>
+		     <span style="margin-right:10px">Subtotal</span><label>{subTotal}</label>
 		</div>
 		<div>
-		     <span>Shipping</span>
+		     <span style="margin-right:10px">Shipping</span><label>{shipping}</label>
 		</div>
 		<hr/>
 		<div>
-		     <span>Total</span>
+		     <span style="margin-right:10px">Total</span><label>{total}</label>
 		</div>
 		<div>
-		     <span>Manual</span>
+		     <span style="margin-right:10px">Manual</span><label>{manual}</label>
 		</div>
 		<div>
-		     <span>Manual Refund</span>
+		     <span style="margin-right:10px">Manual Refund</span><label>{manualRefund}</label>
 		</div>
 	  <hr/>
 	  <p>If you have any questions, reply to this email or contact us at {email}</p>
