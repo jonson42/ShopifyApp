@@ -33,20 +33,26 @@ app.controller("detailsCtr", function ($scope, $ajax, $queryStr) {
         });
     };
     $scope.GetDetails();
-
+    $scope.tracking = {
+        Number: "",
+        Carrier: "",
+        Url:""
+    }
     $scope.MarkFulfiel = function () {
-        if ($scope.trackingNumber === "") {
+        if ($scope.tracking.Number === "") {
             $scope.flagTracking = true;
         } else {
-            $scope.trackingNumber = "";
-            $scope.trackingCarrier = "";
-            $scope.trackingUrl = "";
+            $scope.tracking.Number = "";
+            $scope.tracking.Carrier = "";
+            $scope.tracking.Url = "";
             var dataEmail = {
                 name: $scope.itemDetails.name,
                 email: $scope.itemDetails.email,
                 listItem: $scope.itemDetails.line_items,
-                Order: $scope.itemDetails
+                Order: $scope.itemDetails,
+                TrackingUrl: $scope.tracking.Url + "/" + $scope.tracking.Number
             };
+            debugger;
             $ajax.sendEmailFullField(dataEmail).then(function response(success) {
                 debugger;
             }, function error(error) {

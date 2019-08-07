@@ -11,5 +11,6 @@ namespace ShopifyBackupWeb.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public List<LineItem> ListItem { get; set; }
+        public string TrackingUrl { get; set; }
     }
 }

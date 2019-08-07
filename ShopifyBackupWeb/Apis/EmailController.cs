@@ -37,8 +37,10 @@ namespace ShopifyBackupWeb.Apis
                 var dataHtml = System.IO.File.ReadAllText(path);
                 //StringBuilder stringBuilder = new StringBuilder();
                 var boday = dataHtml.Replace("{sp}", data);
-                var linkDetails = "https://lestweforgetshop.com/9277734990/orders/cb3696307da06c13de1b6339e95d25cc";
+                var linkDetails = dataEmail.TrackingUrl;
+                boday = boday.Replace("{linkCollection}", Utils.dnsModel.Name + "/collections");
                 boday = boday.Replace("{linkDetails}", linkDetails);
+                boday = boday.Replace("{email}", Utils.emailContacts.Name);
                 //String.Format(dataHtml, data); //stringBuilder.Append(String.Format(dataHtml, data));
                 EmailMsg.Body = boday.ToString();
 
@@ -88,8 +90,11 @@ namespace ShopifyBackupWeb.Apis
                 var dataHtml = System.IO.File.ReadAllText(path);
                 //StringBuilder stringBuilder = new StringBuilder();
                 var boday = dataHtml.Replace("{sp}", data);
-                var linkDetails = "https://lestweforgetshop.com/9277734990/orders/cb3696307da06c13de1b6339e95d25cc";
+                var linkDetails =dataEmail.TrackingUrl;
                 boday = boday.Replace("{linkDetails}", linkDetails);
+                boday = boday.Replace("{linkCollection}", Utils.dnsModel.Name+"/collections");
+                
+                boday = boday.Replace("{email}", Utils.emailContacts.Name);
                 //String.Format(dataHtml, data); //stringBuilder.Append(String.Format(dataHtml, data));
                 EmailMsg.Body = boday.ToString();
 
@@ -138,13 +143,13 @@ namespace ShopifyBackupWeb.Apis
                 var dataHtml = System.IO.File.ReadAllText(path);
                 //StringBuilder stringBuilder = new StringBuilder();
                 var boday = dataHtml.Replace("{sp}", data);
-                var linkDetails = "https://lestweforgetshop.com/9277734990/orders/cb3696307da06c13de1b6339e95d25cc";
+                var linkDetails = dataEmail.TrackingUrl;
                 boday = boday.Replace("{linkDetails}", linkDetails);
                 boday = boday.Replace("{manualRefund}", dataEmail.MoneyRefunds);
                 boday = boday.Replace("{moneyRefund}", dataEmail.MoneyRefunds);
                 boday = boday.Replace("{subTotal}", dataEmail.Order.total_price);
                 boday = boday.Replace("{ total}", dataEmail.Order.total_price);
-                
+                boday = boday.Replace("{email}", Utils.emailContacts.Name);
                 //String.Format(dataHtml, data); //stringBuilder.Append(String.Format(dataHtml, data));
                 EmailMsg.Body = boday.ToString();
 

@@ -10,5 +10,7 @@ namespace ShopifyBackupWeb.Models
         public string MoneyRefunds { get; set; }
         public string Email { get; set; }
         public Order Order { get; set; }
+        public string TrackingUrl{get;set;}
+
     }
 }
