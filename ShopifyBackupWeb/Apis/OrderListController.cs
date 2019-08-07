@@ -18,6 +18,7 @@ namespace ShopifyBackupWeb.Apis
         [HttpGet("getShopify")]
         public List<OrderModel> Get()
         {
+            Utils.SetProduct();
             var listOrder = new List<OrderModel>();
             foreach(var itemSite in Utils.GetApp())
             {
@@ -54,9 +55,11 @@ namespace ShopifyBackupWeb.Apis
                         foreach (var itemSub in item.line_items)
                         {
                             var itemProduct = new ExcelExportModel();
-                            itemProduct.Image = Utils.GetImageUrl(itemSub.title, itemSub.variant_id.ToString());
+                            itemProduct.Image = Utils.GetImageUrl(itemSub.title, itemSub.variant_id.ToString(),Utils.productModel);
                             itemProduct.Order = item.name;
                             itemProduct.VariantTitle = itemSub.variant_title != null ? itemSub.variant_title : "";
+                            itemProduct.Price = itemSub.price != null ? itemSub.price : "";
+                            itemProduct.TotalPrice = itemSub.price != null ? itemSub.price : "";
                             itemProduct.Quantity = itemSub.quantity != 0 ? itemSub.quantity.ToString() : "";
                             itemProduct.Phone = item.phone != null ? item.phone.ToString() : "";
                             itemProduct.SKU = itemSub.sku != null ? itemSub.sku : "";
@@ -101,7 +104,7 @@ namespace ShopifyBackupWeb.Apis
                         {
                             foreach (var itemSub in item.line_items)
                             {
-                                itemSub.image = Utils.GetImageUrl(itemSub.title, itemSub.variant_id.ToString());
+                                itemSub.image = Utils.GetImageUrl(itemSub.title, itemSub.variant_id.ToString(),Utils.productModel);
                             }
                             result = item;
                             break;

@@ -56,93 +56,102 @@ namespace ShopifyBackupWeb.Apis
                             {
                                 excelItem.Image = worksheet.Cells[i, 1].Value.ToString();
                             }
+
                             if (worksheet.Cells[i, 2].Value != null)
                             {
                                 excelItem.VariantTitle = worksheet.Cells[i, 2].Value.ToString();
                             }
                             if (worksheet.Cells[i, 3].Value != null)
                             {
-                                excelItem.Quantity = worksheet.Cells[i, 3].Value.ToString();
+                                excelItem.Price = worksheet.Cells[i, 3].Value.ToString();
                             }
                             if (worksheet.Cells[i, 4].Value != null)
                             {
-                                excelItem.Order = worksheet.Cells[i, 4].Value.ToString();
+                                excelItem.TotalPrice = worksheet.Cells[i, 4].Value.ToString();
                             }
                             if (worksheet.Cells[i, 5].Value != null)
                             {
-                                excelItem.Phone = worksheet.Cells[i, 5].Value.ToString();
+                                excelItem.Quantity = worksheet.Cells[i, 5].Value.ToString();
                             }
                             if (worksheet.Cells[i, 6].Value != null)
                             {
-                                excelItem.SKU = worksheet.Cells[i, 6].Value.ToString();
+                                excelItem.Order = worksheet.Cells[i, 6].Value.ToString();
                             }
                             if (worksheet.Cells[i, 7].Value != null)
                             {
-                                excelItem.EMail = worksheet.Cells[i, 7].Value.ToString();
+                                excelItem.Phone = worksheet.Cells[i, 7].Value.ToString();
                             }
                             if (worksheet.Cells[i, 8].Value != null)
                             {
-                                excelItem.ProductName = worksheet.Cells[i, 8].Value.ToString();
+                                excelItem.SKU = worksheet.Cells[i, 8].Value.ToString();
                             }
                             if (worksheet.Cells[i, 9].Value != null)
                             {
-                                excelItem.OrderNotes = worksheet.Cells[i, 9].Value.ToString();
+                                excelItem.EMail = worksheet.Cells[i, 9].Value.ToString();
                             }
                             if (worksheet.Cells[i, 10].Value != null)
                             {
-                                excelItem.City = worksheet.Cells[i, 10].Value.ToString();
+                                excelItem.ProductName = worksheet.Cells[i,10].Value.ToString();
                             }
                             if (worksheet.Cells[i, 11].Value != null)
                             {
-                                excelItem.Country = worksheet.Cells[i, 11].Value.ToString();
+                                excelItem.OrderNotes = worksheet.Cells[i, 11].Value.ToString();
                             }
                             if (worksheet.Cells[i, 12].Value != null)
                             {
-                                excelItem.Province = worksheet.Cells[i, 12].Value.ToString();
+                                excelItem.City = worksheet.Cells[i, 12].Value.ToString();
                             }
                             if (worksheet.Cells[i, 13].Value != null)
                             {
-                                excelItem.Zip = worksheet.Cells[i, 13].Value.ToString();
+                                excelItem.Country = worksheet.Cells[i, 13].Value.ToString();
                             }
                             if (worksheet.Cells[i, 14].Value != null)
                             {
-                                excelItem.Address = worksheet.Cells[i, 14].Value.ToString();
+                                excelItem.Province = worksheet.Cells[i, 14].Value.ToString();
                             }
                             if (worksheet.Cells[i, 15].Value != null)
                             {
-                                excelItem.ShippingFullname = worksheet.Cells[i, 15].Value.ToString();
+                                excelItem.Zip = worksheet.Cells[i, 15].Value.ToString();
                             }
                             if (worksheet.Cells[i, 16].Value != null)
                             {
-                                excelItem.ProvinceCode = worksheet.Cells[i, 16].Value.ToString();
+                                excelItem.Address = worksheet.Cells[i, 16].Value.ToString();
                             }
                             if (worksheet.Cells[i, 17].Value != null)
                             {
-                                excelItem.AddressFull = worksheet.Cells[i, 17].Value.ToString();
+                                excelItem.ShippingFullname = worksheet.Cells[i, 17].Value.ToString();
                             }
                             if (worksheet.Cells[i, 18].Value != null)
                             {
-                                excelItem.CountryCode = worksheet.Cells[i, 18].Value.ToString();
+                                excelItem.ProvinceCode = worksheet.Cells[i, 18].Value.ToString();
                             }
                             if (worksheet.Cells[i, 19].Value != null)
                             {
-                                excelItem.TransactionCard = worksheet.Cells[i, 19].Value.ToString();
+                                excelItem.AddressFull = worksheet.Cells[i, 19].Value.ToString();
+                            }
+                            if (worksheet.Cells[i, 20].Value != null)
+                            {
+                                excelItem.CountryCode = worksheet.Cells[i, 20].Value.ToString();
+                            }
+                            if (worksheet.Cells[i, 21].Value != null)
+                            {
+                                excelItem.TransactionCard = worksheet.Cells[i, 21].Value.ToString();
                             }
                             if (worksheet.Cells[i, 20].Value != null)
                             {
                                 excelItem.PayPalTransactionId = worksheet.Cells[i, 20].Value.ToString();
                             }
-                            if (worksheet.Cells[i, 21].Value != null)
-                            {
-                                excelItem.Tracking = worksheet.Cells[i, 21].Value.ToString();
-                            }
                             if (worksheet.Cells[i, 22].Value != null)
                             {
-                                excelItem.TrackingUrl = worksheet.Cells[i, 22].Value.ToString();
+                                excelItem.Tracking = worksheet.Cells[i, 22].Value.ToString();
                             }
                             if (worksheet.Cells[i, 23].Value != null)
                             {
-                                excelItem.Carrer = worksheet.Cells[i, 23].Value.ToString();
+                                excelItem.TrackingUrl = worksheet.Cells[i, 23].Value.ToString();
+                            }
+                            if (worksheet.Cells[i, 24].Value != null)
+                            {
+                                excelItem.Carrer = worksheet.Cells[i, 24].Value.ToString();
                             }
                             list.Add(excelItem);
                         }

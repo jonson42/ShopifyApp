@@ -24,11 +24,12 @@ namespace ShopifyBackupWeb.Apis
                 {
                     tw.WriteLine(value);
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return ex.ToString();
             }
-            
+
 
             return "true";
         }
@@ -65,6 +66,25 @@ namespace ShopifyBackupWeb.Apis
 
             return "true";
         }
+        public void UpdateFile(object inparam, string file)
+        {
+            try
+            {
+                var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + String.Format("\\Data\\{0}.json", file));
+                string value = JsonConvert.SerializeObject(inparam);
+                using (var tw = new StreamWriter(path, false))
+                {
+                    tw.WriteLine(value);
+                    tw.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                var a = ex.ToString();
+            }
+        }
+       
+
         //
         [HttpGet("getCollectionDefault")]
         public List<ListHost> getCollectionDefault()
@@ -73,9 +93,9 @@ namespace ShopifyBackupWeb.Apis
             var data = "";
             if (System.IO.File.Exists(path))
             {
-                 data= System.IO.File.ReadAllText(path);
+                data = System.IO.File.ReadAllText(path);
             }
-            
+
             var listHost = new List<ListHost>();
             listHost = JsonConvert.DeserializeObject<List<ListHost>>(data);
             return listHost;
@@ -105,6 +125,53 @@ namespace ShopifyBackupWeb.Apis
         public List<ListSite> getSiteDefault()
         {
             return Utils.GetApp();
+        }
+        [HttpGet("getDefaultEmail")]
+        public EmailModel getDefaultEmail()
+        {
+            var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\Email.json");
+            var data = "";
+            if (System.IO.File.Exists(path))
+            {
+                data = System.IO.File.ReadAllText(path);
+            }
+
+            var email = new EmailModel();
+            email = JsonConvert.DeserializeObject<EmailModel>(data);
+            return email;
+        }
+        [HttpGet("getDefaultDNS")]
+        public DNSModel getDefaultDNS()
+        {
+            Utils.SetDnsModel();
+            return Utils.dnsModel;
+        }
+        [HttpPost("updateEmail")]
+        public string updateEmail([FromBody]EmailModel inparam)
+        {
+            UpdateFile(inparam, "Email");
+            Utils.SetEmail();
+            return "true";
+        }
+        [HttpGet("getEmailContacts")]
+        public EmailContactsModel getEmailContacts()
+        {
+            Utils.SetEmailContacts();
+            return Utils.emailContacts;
+        }
+        [HttpPost("updateEmailContacts")]
+        public string updateEmailContacts([FromBody]EmailContactsModel inparam)
+        {
+            UpdateFile(inparam, "EmailContacts");
+            Utils.SetEmail();
+            return "true";
+        }
+        [HttpPost("updateDNS")]
+        public string updateDNS([FromBody]DNSModel inparam)
+        {
+            UpdateFile(inparam, "DNS");
+            Utils.SetDnsModel();
+            return "true";
         }
     }
 }

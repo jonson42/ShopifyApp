@@ -71,24 +71,26 @@ namespace ShopifyBackupWeb.Excel
                             {
                                 worksheet.Cells[i, 1].Value = itemSub.Image;
                                 worksheet.Cells[i, 2].Value = itemSub.VariantTitle;
-                                worksheet.Cells[i, 3].Value = itemSub.Quantity;
-                                worksheet.Cells[i, 4].Value = itemSub.Order;
-                                worksheet.Cells[i, 5].Value = itemSub.Phone;
-                                worksheet.Cells[i, 6].Value = itemSub.SKU;
-                                worksheet.Cells[i, 7].Value = itemSub.EMail;
-                                worksheet.Cells[i, 8].Value = itemSub.ProductName;
-                                worksheet.Cells[i, 9].Value = itemSub.OrderNotes;
-                                worksheet.Cells[i, 10].Value = itemSub.City;
-                                worksheet.Cells[i, 11].Value = itemSub.Country;
-                                worksheet.Cells[i, 12].Value = itemSub.Province;
-                                worksheet.Cells[i, 13].Value = itemSub.Zip;
-                                worksheet.Cells[i, 14].Value = itemSub.Address;
-                                worksheet.Cells[i, 15].Value = itemSub.ShippingFullname;
-                                worksheet.Cells[i, 16].Value = itemSub.ProvinceCode;
-                                worksheet.Cells[i, 17].Value = itemSub.AddressFull;
-                                worksheet.Cells[i, 18].Value = itemSub.CountryCode;
-                                worksheet.Cells[i, 19].Value = itemSub.TransactionCard;
-                                worksheet.Cells[i, 20].Value = itemSub.PayPalTransactionId;
+                                worksheet.Cells[i, 3].Value = itemSub.Price;
+                                worksheet.Cells[i, 4].Value = itemSub.TotalPrice;
+                                worksheet.Cells[i, 5].Value = itemSub.Quantity;
+                                worksheet.Cells[i, 6].Value = itemSub.Order;
+                                worksheet.Cells[i, 7].Value = itemSub.Phone;
+                                worksheet.Cells[i, 8].Value = itemSub.SKU;
+                                worksheet.Cells[i, 9].Value = itemSub.EMail;
+                                worksheet.Cells[i, 10].Value = itemSub.ProductName;
+                                worksheet.Cells[i, 11].Value = itemSub.OrderNotes;
+                                worksheet.Cells[i, 12].Value = itemSub.City;
+                                worksheet.Cells[i, 13].Value = itemSub.Country;
+                                worksheet.Cells[i, 14].Value = itemSub.Province;
+                                worksheet.Cells[i, 15].Value = itemSub.Zip;
+                                worksheet.Cells[i, 16].Value = itemSub.Address;
+                                worksheet.Cells[i, 17].Value = itemSub.ShippingFullname;
+                                worksheet.Cells[i, 18].Value = itemSub.ProvinceCode;
+                                worksheet.Cells[i, 19].Value = itemSub.AddressFull;
+                                worksheet.Cells[i, 20].Value = itemSub.CountryCode;
+                                worksheet.Cells[i, 22].Value = itemSub.TransactionCard;
+                                worksheet.Cells[i, 23].Value = itemSub.PayPalTransactionId;
                                 i++;
                             }
 

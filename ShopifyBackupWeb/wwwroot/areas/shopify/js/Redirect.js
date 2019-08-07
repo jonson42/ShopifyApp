@@ -26,6 +26,32 @@ app.service("$ajax", function ($http) {
         var temp = this.url + "updateCollection";
         return $http.post(temp, listCollection);
     };
+
+    this.getDefaultEmail = function () {
+        var temp = this.url + "getDefaultEmail";
+        return $http.get(temp);
+    };
+    this.updateEmail = function (itemEmail) {
+        var temp = this.url + "updateEmail";
+        return $http.post(temp, itemEmail);
+    };
+
+    this.getDefaultDNS = function () {
+        var temp = this.url + "getDefaultDNS";
+        return $http.get(temp);
+    };
+    this.updateDNS = function (itemEmail) {
+        var temp = this.url + "updateDNS";
+        return $http.post(temp, itemEmail);
+    };
+    this.getEmailContacts = function () {
+        var temp = this.url + "getEmailContacts";
+        return $http.get(temp);
+    };
+    this.updateEmailContacts = function (itemEmail) {
+        var temp = this.url + "updateEmailContacts";
+        return $http.post(temp, itemEmail);
+    };
 });
 app.factory("$share", function ($rootScope) {
     return {
@@ -69,7 +95,7 @@ app.controller("mainCtr", function ($scope, $ajax) {
 
     $scope.GetCollectionDefault = function () {
         $ajax.getCollectionDefault().then(function response(success) {
-            if (success.data != "") {
+            if (success.data !== "") {
                 $scope.CollectionList = success.data;
             }
         }, function error(error) {
@@ -97,7 +123,7 @@ app.controller("mainCtr", function ($scope, $ajax) {
 
     $scope.GetSiteDefault = function () {
         $ajax.getSiteDefault().then(function response(success) {
-            if (success.data != "") {
+            if (success.data !== "") {
                 $scope.SiteList = success.data;
             }
         }, function error(error) {
@@ -123,5 +149,61 @@ app.controller("mainCtr", function ($scope, $ajax) {
 
     $scope.RemoveSite = function (index, indexHost) {
         $scope.SiteList.splice(index, 1);
+    };
+
+    $scope.GetDefaultEmail = function () {
+        $ajax.getDefaultEmail().then(function response(success) {
+            if (success.data !== "") {
+                $scope.email = success.data;
+            }
+        }, function error(error) {
+            console.log("Export error !");
+        });
+    };
+    $scope.SaveEmailDefault = function () {
+        
+        $ajax.updateEmail($scope.email).then(function response(success) {
+            alert("Save Email successfully !");
+        }, function error(error) {
+            alert("Save host error !");
+        });
+    };
+    $scope.GetDefaultEmail();
+    $scope.GetDefaultDNS = function () {
+        $ajax.getDefaultDNS().then(function response(success) {
+            if (success.data !== "") {
+                $scope.dns = success.data;
+            }
+        }, function error(error) {
+            console.log("Export error !");
+        });
+    };
+    $scope.GetDefaultDNS();
+    $scope.SaveDNSDefault = function () {
+        
+        $ajax.updateDNS($scope.dns).then(function response(success) {
+            alert("Save DNS successfully !");
+        }, function error(error) {
+            alert("Save host error !");
+        });
+    };
+
+    $scope.GetEmailContacts = function () {
+        $ajax.getEmailContacts().then(function response(success) {
+            if (success.data !== "") {
+                $scope.EmailContacts = success.data;
+            }
+        }, function error(error) {
+            console.log("Export error !");
+        });
+    };
+    $scope.GetEmailContacts();
+    $scope.SaveEmailContactsDefault = function () {
+
+        $ajax.updateEmailContacts($scope.EmailContacts).then(function response(success) {
+            alert("Save Email Contacts successfully !");
+        }, function error(error) {
+            alert("Save host error !");
+        });
     };
 });

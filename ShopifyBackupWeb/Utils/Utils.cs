@@ -13,14 +13,55 @@ namespace ShopifyBackupWeb
 {
     public static class Utils
     {
-        public static string GetImageUrl(string title,string varianId)
+        public static ProductModel productModel { get; set; }
+        public static EmailModel emailModel { get; set; }
+        public static DNSModel dnsModel { get; set; }
+        public static EmailContactsModel emailContacts { get; set; }
+        public static void SetEmailContacts()
+        {
+            var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\EmailContacts.json");
+            var data = "";
+            if (System.IO.File.Exists(path))
+            {
+                data = System.IO.File.ReadAllText(path);
+            }
+            emailContacts = JsonConvert.DeserializeObject<EmailContactsModel>(data);
+        }
+        public static void SetDnsModel()
+        {
+            var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\DNS.json");
+            var data = "";
+            if (System.IO.File.Exists(path))
+            {
+                data = System.IO.File.ReadAllText(path);
+            }
+            dnsModel = JsonConvert.DeserializeObject<DNSModel>(data);
+        }
+
+        public static void SetEmail()
+        {
+            var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\Email.json");
+            var data = "";
+            if (System.IO.File.Exists(path))
+            {
+                data = System.IO.File.ReadAllText(path);
+            }
+            emailModel = JsonConvert.DeserializeObject<EmailModel>(data);
+        }
+        public static void SetProduct()
         {
             foreach (var itemSite in Utils.GetApp())
             {
                 var product = Utils.GetDataFromLink("List_Product", "products", itemSite);
-                var productModel = JsonConvert.DeserializeObject<ProductModel>(product);
+                productModel = JsonConvert.DeserializeObject<ProductModel>(product);
+            }
+        }
+        public static string GetImageUrl(string title,string varianId, ProductModel productModel)
+        {
+           
                 foreach (var itemProduct in productModel.products)
                 {
+                    
                     foreach (var itemImage in itemProduct.images)
                     {
                         foreach (var itemVari in itemImage.variant_ids)
@@ -28,15 +69,12 @@ namespace ShopifyBackupWeb
                             if (itemVari.ToString() == varianId)
                             {
                                 return itemImage.src;
-                                break;
                             }
                         }
                     }
-                        if (itemProduct.title == title)
-                        {
-                            return itemProduct.images[0].src;
-                        }
-
+                if (itemProduct.title == title)
+                {
+                    return itemProduct.images[0].src;
                 }
             }
                 return "";
@@ -78,11 +116,16 @@ namespace ShopifyBackupWeb
                 client.Headers[HttpRequestHeader.Authorization] = string.Format(
                     "Basic {0}", credentials);
                 data = client.DownloadString(String.Format("https://{0}.myshopify.com/admin/api/2019-07/{1}.json", appModel.Site, nameItem));
-                using (var tw = new StreamWriter(path, false))
+                try
                 {
-                    tw.WriteLine(data);
-                    tw.Close();
+                    using (var tw = new StreamWriter(path, false))
+                    {
+                        tw.WriteLine(data);
+                        tw.Close();
+                    }
                 }
+                catch { }
+                
             }
             catch(Exception ex)
             {

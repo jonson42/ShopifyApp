@@ -1,11 +1,10 @@
 ﻿var app = angular.module("crewcloud", ["ngFileUpload","ui.bootstrap"]);
 app.service("$ajax", function ($http) {
     this.url = "/api/shopify/";
-    this.getShopify = function (_listSeq) {
-        var temp = this.url + "getShopify";
-        return $http.get(temp);
+    this.sendEmailFullFieldImport = function (dataEmail) {
+        var temp = this.url + "sendEmailFullFieldImport";
+        return $http.post(temp, dataEmail);
     };
-
 });
 app.factory("$share", function ($rootScope) {
     return {
@@ -49,4 +48,27 @@ $scope.listExcel =[];
 
         });
     };
+    $scope.MarkFulfiel = function () {
+        $scope.trackingNumber = "";
+        $scope.trackingCarrier = "";
+        $scope.trackingUrl = "";
+        var dataEmail = {
+            name: $scope.itemDetails.name,
+            email: $scope.itemDetails.email,
+            listItem: $scope.itemDetails.line_items,
+            Order: $scope.itemDetails
+        };
+        $ajax.sendEmailFullFieldImport(dataEmail).then(function response(success) {
+            debugger;
+        }, function error(error) {
+            console.log("Roi roi do");
+        });
+    };
+    $scope.MarkFullField = function () {
+        angular.forEach($scope.listExcel, function (item) {
+
+        });
+    };
+    
+
 });

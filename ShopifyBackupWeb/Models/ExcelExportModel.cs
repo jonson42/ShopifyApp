@@ -9,6 +9,8 @@ namespace ShopifyBackupWeb.Models
     {
         public string Image { get; set; }
         public string VariantTitle { get; set; }
+        public string Price { get; set; }
+        public string TotalPrice { get; set; }
         public string Quantity { get; set; }
         public string Order { get; set; }
         public string Phone { get; set; }

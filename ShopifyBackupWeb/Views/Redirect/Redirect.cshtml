@@ -50,7 +50,7 @@
         </div>
     </div>
     <!--Site -->
-    <hr/>
+    <hr />
     <div class="col-md-12 mt-4">
         <span class="row">
             <label class="mr-3">Site setup</label>
@@ -68,7 +68,35 @@
                 </span>
             </div>
         </div>
-        <button class="btn btn-primary mt-4" ng-click="SaveSite()">Save Collection</button>
+        <button class="btn btn-primary mt-4" ng-click="SaveSite()">Save Site</button>
     </div>
-
+    <hr />
+    <div class="mt-4 row">
+        <div class="input-group input-group-appendable mt-4">
+            <label class="ml-2 mr-2">Host</label><input autocomplete="off" class="input form-control" id="field1" name="field1" type="text" ng-model="email.host">
+            <label class="ml-2 mr-2">Email</label><input autocomplete="off" class="input form-control" id="field1" name="field1" type="text" ng-model="email.emailSend">
+            <label class="ml-2 mr-2">Password</label><input autocomplete="off" class="input form-control" id="field1" name="field1" type="text" ng-model="email.passSend">
+            <span class="input-group-btn">
+                <button id="btn1" class="btn btn-primary add-more" type="button" ng-click="SaveEmailDefault()">+</button>
+            </span>
+        </div>
+    </div>
+    <hr />
+    <div class="mt-4 row">
+        <div class="input-group input-group-appendable mt-4">
+            <label class="ml-2 mr-2">Domain Name</label><input autocomplete="off" class="input form-control" id="field1" name="field1" type="text" ng-model="dns.name">
+            <span class="input-group-btn">
+                <button id="btn1" class="btn btn-primary add-more" type="button" ng-click="SaveDNSDefault()">+</button>
+            </span>
+        </div>
+    </div>
+    <hr />
+    <div class="mt-4 row">
+        <div class="input-group input-group-appendable mt-4">
+            <label class="ml-2 mr-2">Email contact</label><input autocomplete="off" class="input form-control" id="field1" name="field1" type="text" ng-model="EmailContacts.name">
+            <span class="input-group-btn">
+                <button id="btn1" class="btn btn-primary add-more" type="button" ng-click="SaveEmailContactsDefault()">+</button>
+            </span>
+        </div>
+    </div>
 </div>
