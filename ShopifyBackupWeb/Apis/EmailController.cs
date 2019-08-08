@@ -32,7 +32,7 @@ namespace ShopifyBackupWeb.Apis
 
                 EmailMsg.Subject = String.Format("A shipment from order {0} is on the way", dataEmail.Order);
                 var data = "";
-                    data = data + "<hr/><div><img src='" + dataEmail.Image + "/>" + dataEmail.Order + " x " + dataEmail.Quantity + "<div><hr/>";
+                data = data + "<hr/><div><img style='width: 73px; height: 76px;' src='" + dataEmail.Image + "'/>" + dataEmail.Order + " x " + dataEmail.Quantity + "<div><hr/>";
                 var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\shipment_confirm.html");
                 var dataHtml = System.IO.File.ReadAllText(path);
                 //StringBuilder stringBuilder = new StringBuilder();
@@ -84,7 +84,14 @@ namespace ShopifyBackupWeb.Apis
                 var data = "";
                 foreach(var item in dataEmail.ListItem)
                 {
-                    data = data + "<hr/><div><img src='" + item.image + "/>" + item.name + " x "+item.quantity+ "<div><hr/>";
+                    if (data == "")
+                    {
+                        data = data + "<div><img  style='width: 73px; height: 76px;' src='" + item.image + "'/>" + item.name + " x " + item.quantity + "<div>";
+                    }
+                    else
+                    {
+                        data = data + "<hr/><div><img  style='width: 73px; height: 76px;' src='" + item.image + "'/>" + item.name + " x " + item.quantity + "<div>";
+                    }
                 }
                 var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\shipment_confirm.html");
                 var dataHtml = System.IO.File.ReadAllText(path);
@@ -137,9 +144,17 @@ namespace ShopifyBackupWeb.Apis
                 var data = "";
                 foreach (var item in dataEmail.Order.line_items)
                 {
-                    data = data + "<hr/><div><img src='" + item.image+"/>"+ item.name + " x " + item.quantity + "<div><hr/>";
+                    if (data == "")
+                    {
+                        data = data + "<div><img  style='width: 73px; height: 76px;' src='" + item.image + "'/>" + item.name + " x " + item.quantity + "<div>";
+                    }
+                    else
+                    {
+                        data = data + "<hr/><div><img  style='width: 73px; height: 76px;' src='" + item.image + "'/>" + item.name + " x " + item.quantity + "<div>";
+                    }
+                   
                 }
-                var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\shipment_confirm.html");
+                var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\email_refund.html.html");
                 var dataHtml = System.IO.File.ReadAllText(path);
                 //StringBuilder stringBuilder = new StringBuilder();
                 var boday = dataHtml.Replace("{sp}", data);

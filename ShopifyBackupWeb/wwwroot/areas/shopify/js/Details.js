@@ -54,7 +54,7 @@ app.controller("detailsCtr", function ($scope, $ajax, $queryStr) {
             };
             debugger;
             $ajax.sendEmailFullField(dataEmail).then(function response(success) {
-                debugger;
+                location.href = "/";
             }, function error(error) {
                 console.log("Roi roi do");
             });

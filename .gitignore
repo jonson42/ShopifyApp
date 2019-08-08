@@ -8,3 +8,6 @@ Release/
 x64/
 v15/
 Publishprofiles/
+.vs/ShopifyBackupWeb/v16/Server/sqlite3/storage.ide-shm
+v16/
+ShopifyBackupWeb/obj/

@@ -30,7 +30,11 @@ app.controller("mainCtr", function ($scope, $ajax, $queryStr) {
     $scope.GetDetails = function () {
         $ajax.getDetails($scope.orderId).then(function response(success) {
             $scope.itemDetails = success.data;
-            $scope.limitMoney = success.data.shipping_lines[0].discounted_price;
+            if (success.data.shipping_lines.length == 0) {
+                $scope.flagRefunds = true;
+            } else {
+                $scope.limitMoney = success.data.shipping_lines[0].discounted_price;
+            }
         }, function error(error) {
             console.log("Roi roi do");
         });
@@ -53,7 +57,7 @@ app.controller("mainCtr", function ($scope, $ajax, $queryStr) {
         };
 
         $ajax.sendEmailRefunds(dataEmail).then(function response(success) {
-            debugger;
+            location.href = "/";
         }, function error(error) {
             console.log("Roi roi do");
         });

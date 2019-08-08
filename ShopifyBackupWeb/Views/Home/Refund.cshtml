@@ -56,7 +56,7 @@
             <input class="form-control" ng-model="moneyRefund" />
             <span>{{}}available for refund</span>
             <div>
-                <button class="btn btn-primary" ng-click="SendRefunds()">Refunds ${{moneyRefund}}</button>
+                <button class="btn btn-primary" ng-click="SendRefunds()" ng-disabled="flagRefunds">Refunds ${{moneyRefund}}</button>
             </div>
             
         </div>

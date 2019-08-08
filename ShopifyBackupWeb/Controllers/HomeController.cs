@@ -31,6 +31,8 @@ namespace ShopifyBackupWeb.Controllers
         public IActionResult Index()
         {
             Utils.SetEmail();
+            Utils.SetEmailContacts();
+            Utils.SetDnsModel();
             if (HttpContext.Session.GetString("user") == null)
             {
                 return LocalRedirect("~/Home/Login");

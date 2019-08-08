@@ -24,6 +24,13 @@ app.factory("$share", function ($rootScope) {
 });
 
 app.controller("mainCtr", function ($scope, $ajax) {
+    $scope.totalItems = 0;
+    $scope.viewCount = 10;
+    $scope.currentPageIndex = 1;
+    $scope.numPages = 5;
+    $scope.pageChanged = function () {
+
+    };
     $scope.SendEmail = function () {
         $ajax.sendEMail().then(function response(success) {
             console.log("Nghiem dep trai qua" + success);
@@ -35,30 +42,50 @@ app.controller("mainCtr", function ($scope, $ajax) {
     $scope.GetShopifyData = function () {
         $ajax.getShopify().then(function response(success) {
             $scope.listOrder = success.data;
+            $scope.totalItems = success.data.length;
         }, function error(error) {
             console.log("Index.js link function GetShopifyData !" + error.ToString());
         });
+    };
+    $scope.SearchText = function () {
+        var check=[];
+        for (var i = 0; i < $scope.listOrder.length;i++){
+            if ($scope.listOrder[i].order.includes($scope.search.value)) {
+                check.push($scope.listOrder[i]);
+            }
+        }
+            
+        
+        $scope.listOrder = check;
     };
     $scope.GetShopifyData();
     $scope.showDetails = function (id) {
         debugger;
         window.location="/Home/Details?id=" + id;
     };
+    $scope.CheckAll = function () {
+        angular.forEach($scope.listOrder, function (item) {
+            if (!$scope.selectedAll.value) {
+                item.checkvalue = true;
+            } else {
+                item.checkvalue = false;
+            }
+        })
+    };
     $scope.ExportExcel = function () {
         $scope.listProduct = [];
         angular.forEach($scope.listOrder, function (item) {
             angular.forEach(item.listProduct, function (itemSub) {
-                $scope.listProduct.push(itemSub);
+                if (item.checkvalue) {
+                    $scope.listProduct.push(itemSub);
+                }
             });
-            
         })
         $ajax.exportExcel($scope.listProduct).then(function response(success) {
             window.open("/Data_Init/Out/ExportOut.xlsx","_blank");
         }, function error(error) {
             console.log("Export error !");
         });
-        //var temp = "https://localhost:44331/api/shopify/exportExcel";
-        //window.open(temp, "_bank");
     };
 
 });
