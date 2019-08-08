@@ -7,7 +7,9 @@ namespace ShopifyBackupWeb.Models
 {
     public class OrderModel
     {
+        public string Stt { get; set; }
         public string Id { get; set; }
+        public string Email { get; set; }
         public string Order { get; set; }
         public string Date { get; set; }
         public string Customer { get; set; }

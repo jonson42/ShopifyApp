@@ -50,9 +50,15 @@ app.controller("mainCtr", function ($scope, $ajax) {
     $scope.SearchText = function () {
         var check=[];
         for (var i = 0; i < $scope.listOrder.length;i++){
-            if ($scope.listOrder[i].order.includes($scope.search.value)) {
+            if ($scope.listOrder[i].order.includes($scope.search.value) || $scope.listOrder[i].customer.includes($scope.search.value)
+                || $scope.listOrder[i].email.includes($scope.search.value)) {
                 check.push($scope.listOrder[i]);
             }
+            angular.forEach($scope.listOrder.line_items, function (item) {
+                if (item.title.includes($scope.search.value)) {
+                    check.push($scope.listOrder[i]);
+                }
+            });
         }
             
         
@@ -76,11 +82,13 @@ app.controller("mainCtr", function ($scope, $ajax) {
         $scope.listProduct = [];
         angular.forEach($scope.listOrder, function (item) {
             angular.forEach(item.listProduct, function (itemSub) {
+                debugger;
                 if (item.checkvalue) {
                     $scope.listProduct.push(itemSub);
                 }
             });
-        })
+        });
+        debugger;
         $ajax.exportExcel($scope.listProduct).then(function response(success) {
             window.open("/Data_Init/Out/ExportOut.xlsx","_blank");
         }, function error(error) {
