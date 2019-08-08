@@ -48,20 +48,30 @@ app.controller("mainCtr", function ($scope, $ajax) {
         });
     };
     $scope.SearchText = function () {
-        var check=[];
-        for (var i = 0; i < $scope.listOrder.length;i++){
-            if ($scope.listOrder[i].order.includes($scope.search.value) || $scope.listOrder[i].customer.includes($scope.search.value)
-                || $scope.listOrder[i].email.includes($scope.search.value)) {
-                check.push($scope.listOrder[i]);
-            }
-            angular.forEach($scope.listOrder.line_items, function (item) {
-                if (item.title.includes($scope.search.value)) {
+        var check = [];
+        if ($scope.search.value == -1) {
+            for (var i = 0; i < $scope.listOrder.length; i++) {
+                if ($scope.listOrder[i].order.includes($scope.search.value) || $scope.listOrder[i].customer.includes($scope.search.value)
+                    || $scope.listOrder[i].email.includes($scope.search.value)
+                    || $scope.listOrder[i].shippingAddress.address1.includes($scope.search.value)) {
                     check.push($scope.listOrder[i]);
                 }
+                angular.forEach($scope.listOrder.line_items, function (item) {
+                    if (item.title.includes($scope.search.value)) {
+                        check.push($scope.listOrder[i]);
+                    }
+                });
+            }
+        } else {
+            var startIndex = $scope.search.value.split("->")[0];
+            var endIndex = $scope.search.value.split("->")[1];
+            angular.forEach($scope.listOrder, function (item) {
+                if (item.stt >= startIndex && item.stt <= endIndex) {
+                    check.push(item);
+                }
             });
-        }
             
-        
+        }
         $scope.listOrder = check;
     };
     $scope.GetShopifyData();
@@ -82,7 +92,6 @@ app.controller("mainCtr", function ($scope, $ajax) {
         $scope.listProduct = [];
         angular.forEach($scope.listOrder, function (item) {
             angular.forEach(item.listProduct, function (itemSub) {
-                debugger;
                 if (item.checkvalue) {
                     $scope.listProduct.push(itemSub);
                 }

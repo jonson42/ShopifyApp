@@ -16,7 +16,7 @@ namespace ShopifyBackupWeb.Models
         public string Payment { get; set; }
         public string Fulfillment { get; set; }
         public string Total { get; set; }
-
+        public ShippingAddress shippingAddress { get; set; }
         //File Export Excel
         public List<ExcelExportModel> listProduct{get;set;}
 

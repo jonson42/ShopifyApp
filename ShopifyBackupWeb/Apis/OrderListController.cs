@@ -20,7 +20,7 @@ namespace ShopifyBackupWeb.Apis
         {
             Utils.SetProduct();
             var listOrder = new List<OrderModel>();
-            int Stt = 1;
+            //int Stt = 1;
             foreach(var itemSite in Utils.GetApp())
             {
                 var data = Utils.GetDataFromLink("List_Order", "orders",itemSite);
@@ -35,7 +35,8 @@ namespace ShopifyBackupWeb.Apis
                         //show list 
                         #region
                         OrderModel orderModel = new OrderModel();
-                        orderModel.Stt = Stt.ToString();
+                        orderModel.shippingAddress = item.shipping_address;
+                        //orderModel.Stt = Stt.ToString();
                         orderModel.Email = item.email != null ? item.id.ToString() : "";
                         orderModel.Id = item.id != null ? item.id.ToString() : "";
                         orderModel.Order = item.name != null ? item.name.ToString() : "";
@@ -83,12 +84,17 @@ namespace ShopifyBackupWeb.Apis
 
                         #endregion
                         listOrder.Add(orderModel);
-                        Stt++;
+                       // Stt++;
                     }
                 }
                 
             }
-            
+            int Stt = listOrder.Count;
+            foreach(var item in listOrder)
+            {
+                item.Stt = Stt.ToString();
+                Stt--;
+            }
             return listOrder;
         }
         [HttpGet("getDetails")]
