@@ -18,7 +18,7 @@ namespace ShopifyBackupWeb.Apis
         [HttpPost("sendEmailFullFieldImport")]
         public bool Get([FromBody]ExcelExportModel dataEmail)
         {
-            Utils.AddOrderFullField(dataEmail.Order);
+            Utils.AddDataToFile(dataEmail.Order, "ListFullField");
             try
             {
                 int SmtpPort = 25;
@@ -68,7 +68,7 @@ namespace ShopifyBackupWeb.Apis
         [HttpPost("sendEmailFullField")]
         public bool Get([FromBody]EmailFullFieldModel dataEmail)
         {
-            Utils.AddOrderFullField(dataEmail.Order.name);
+            Utils.AddDataToFile(dataEmail.Order.name, "ListFullField");
             try
             {
                 int SmtpPort = 25;
@@ -133,7 +133,16 @@ namespace ShopifyBackupWeb.Apis
             {
                 int SmtpPort = 25;
                 string SmtpServer = "smtp.yandex.ru";
-
+                string dataStr = "";
+                if (Convert.ToDecimal(dataEmail.MoneyRefunds) >= Convert.ToDecimal(dataEmail.Order.total_price))
+                {
+                    dataStr = dataEmail.Order.name+ "~refunded";
+                }
+                else
+                {
+                    dataStr = dataEmail.Order.name + "~partial refunded";
+                }
+                Utils.AddDataToFile(dataStr, "Refunds");
                 MailMessage EmailMsg = new MailMessage();
 
                 EmailMsg.From = new MailAddress(Utils.emailModel.EmailSend,Utils.emailModel.Host);
@@ -154,7 +163,7 @@ namespace ShopifyBackupWeb.Apis
                     }
                    
                 }
-                var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\email_refund.html.html");
+                var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\email_refund.html");
                 var dataHtml = System.IO.File.ReadAllText(path);
                 //StringBuilder stringBuilder = new StringBuilder();
                 var boday = dataHtml.Replace("{sp}", data);
@@ -162,8 +171,10 @@ namespace ShopifyBackupWeb.Apis
                 boday = boday.Replace("{linkDetails}", linkDetails);
                 boday = boday.Replace("{manualRefund}", dataEmail.MoneyRefunds);
                 boday = boday.Replace("{moneyRefund}", dataEmail.MoneyRefunds);
+                boday = boday.Replace("{shipping}", dataEmail.Order.total_price);
                 boday = boday.Replace("{subTotal}", dataEmail.Order.total_price);
-                boday = boday.Replace("{ total}", dataEmail.Order.total_price);
+                boday = boday.Replace("{manual}", dataEmail.Order.total_price);
+                boday = boday.Replace("{total}", dataEmail.Order.total_price);
                 boday = boday.Replace("{email}", Utils.emailContacts.Name);
                 //String.Format(dataHtml, data); //stringBuilder.Append(String.Format(dataHtml, data));
                 EmailMsg.Body = boday.ToString();

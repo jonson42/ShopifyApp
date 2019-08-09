@@ -33,12 +33,12 @@
                 </div>
                 <hr />
             </div>
-            <div class="col-md-12" ng-repeat="itemShipping in itemDetails.shipping_lines">
+            @*<div class="col-md-12" ng-repeat="itemShipping in itemDetails.shipping_lines">
                 <h6>Refund shipping</h6><br />
                 <p><label>Shipping rate:{{itemShipping.code}}({{itemShipping.discounted_price}})</label></p>
                 <p>Refund amount</p>
                 <input class="form-control" ng-change="ChangeMoney(this);" ng-model="moneyRefund"/>
-            </div>
+            </div>*@
             <div class="col-md-12">
                 <h6>Reason for refund</h6>
                 <input class="form-control" />
@@ -56,7 +56,7 @@
             <input class="form-control" ng-model="moneyRefund" />
             <span>{{}}available for refund</span>
             <div>
-                <button class="btn btn-primary" ng-click="SendRefunds()" ng-disabled="flagRefunds">Refunds ${{moneyRefund}}</button>
+                <button class="btn btn-primary" ng-click="SendRefunds()" ng-disabled="flagRefunds" >Refunds ${{moneyRefund}}</button>
             </div>
             
         </div>

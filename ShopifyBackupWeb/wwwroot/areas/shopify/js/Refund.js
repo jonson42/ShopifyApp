@@ -31,7 +31,7 @@ app.controller("mainCtr", function ($scope, $ajax, $queryStr) {
         $ajax.getDetails($scope.orderId).then(function response(success) {
             $scope.itemDetails = success.data;
             if (success.data.shipping_lines.length == 0) {
-                $scope.flagRefunds = true;
+                
             } else {
                 $scope.limitMoney = success.data.shipping_lines[0].discounted_price;
             }
@@ -50,11 +50,13 @@ app.controller("mainCtr", function ($scope, $ajax, $queryStr) {
 
     };
     $scope.SendRefunds = function () {
+
         var dataEmail = {
             MoneyRefunds: $scope.moneyRefund,
             Order: $scope.itemDetails, 
             Email: $scope.itemDetails.email
         };
+        $scope.flagRefunds = true;
 
         $ajax.sendEmailRefunds(dataEmail).then(function response(success) {
             location.href = "/";

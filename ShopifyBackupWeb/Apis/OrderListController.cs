@@ -37,17 +37,27 @@ namespace ShopifyBackupWeb.Apis
                         OrderModel orderModel = new OrderModel();
                         orderModel.shippingAddress = item.shipping_address;
                         //orderModel.Stt = Stt.ToString();
-                        orderModel.Email = item.email != null ? item.id.ToString() : "";
+                        orderModel.Email = item.email != null ? item.email.ToString() : "";
                         orderModel.Id = item.id != null ? item.id.ToString() : "";
                         orderModel.Order = item.name != null ? item.name.ToString() : "";
                         orderModel.Date = item.created_at != null ? item.created_at.ToString() : "";
                         orderModel.Customer = item.customer != null && item.customer.first_name != null ? item.customer.first_name.ToString() : "";
                         orderModel.Payment = item.financial_status != null ? item.financial_status : "";
                         orderModel.Fulfillment = "UnFullField";
-                        foreach (var itemFullField in Utils.GetOrderFullField()) {
+                        foreach (var itemFullField in Utils.GetDataFromFile("ListFullField")) {
                             if (orderModel.Order == itemFullField)
                             {
                                 orderModel.Fulfillment = "FullField";
+                                break;
+                            }
+                        }
+
+                        foreach(var itemRefunds in Utils.GetDataFromFile("Refunds"))
+                        {
+                            var check = itemRefunds.Split("~");
+                            if (orderModel.Order == check[0])
+                            {
+                                orderModel.Payment = check[1];
                                 break;
                             }
                         }

@@ -155,10 +155,10 @@ namespace ShopifyBackupWeb
 
             return result;
         }
-        public static List<String> GetOrderFullField()
+        public static List<String> GetDataFromFile(string fileName)
         {
             String data = "";
-            var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot") + String.Format("\\Data\\{0}", "ListFullField.json");
+            var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot") + String.Format("\\Data\\{0}.json", fileName);
             if (System.IO.File.Exists(path))
             {
                 data = System.IO.File.ReadAllText(path);
@@ -172,13 +172,13 @@ namespace ShopifyBackupWeb
             }
             return listOrder;
         }
-        public static bool AddOrderFullField(String inparam)
+        public static bool AddDataToFile(String inparam, string fileName)
         {
             try
             {
-                var list = GetOrderFullField();
+                var list = GetDataFromFile(fileName);
                 list.Add(inparam);
-                var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\ListFullField.json");
+                var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + String.Format("\\Data\\{0}.json",fileName));
                 string value = JsonConvert.SerializeObject(list);
                 using (var tw = new StreamWriter(path, false))
                 {
@@ -193,5 +193,6 @@ namespace ShopifyBackupWeb
             
             return true;
         }
+        
     }
 }
