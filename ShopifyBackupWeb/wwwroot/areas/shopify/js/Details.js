@@ -42,22 +42,25 @@ app.controller("detailsCtr", function ($scope, $ajax, $queryStr) {
         if ($scope.tracking.Number === "") {
             $scope.flagTracking = true;
         } else {
-            $scope.tracking.Number = "";
-            $scope.tracking.Carrier = "";
-            $scope.tracking.Url = "";
+            
             var dataEmail = {
                 name: $scope.itemDetails.name,
                 email: $scope.itemDetails.email,
                 listItem: $scope.itemDetails.line_items,
                 Order: $scope.itemDetails,
-                TrackingUrl: $scope.tracking.Url + "/" + $scope.tracking.Number
+                TrackingUrl: $scope.tracking.Url + "/" + $scope.tracking.Number,
+                Carrier: $scope.tracking.Carrier
             };
+            
             debugger;
             $ajax.sendEmailFullField(dataEmail).then(function response(success) {
                 location.href = "/";
             }, function error(error) {
                 console.log("Roi roi do");
-            });
+                });
+            $scope.tracking.Url = "";
+            $scope.tracking.Number = "";
+            $scope.tracking.Carrier = "";
             //location.href = "/";
             $scope.flagMark = true;
         }

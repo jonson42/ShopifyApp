@@ -14,6 +14,9 @@
     <a href="~/Home/Refund?id={{orderId}}" class="float-lg-right "><i class="fa fa-reply"></i>Refund</a>
     </div>
     <div class="row">
+        <label>{{itemDetails.carrier}}</label><a href="{{itemDetails.strackingUrl}}" class="float-lg-right ml-4"><i class="fa fa-reply"></i>{{itemDetails.strackingNumber}}</a>
+    </div>
+    <div class="row">
         <div class="widget-content col-md-8">
 
             <!--Item-->
@@ -47,51 +50,7 @@
                     <div class="col-5">
                         <span>
                             <label>Shipping carrier</label>
-                            <select value="None" class="form-control input-sm" ng-model="trackingCarrier">
-                                <option value="4PX">None</option>
-                                <option value="4PX">4PX</option>
-                                <option value="APC">APC</option>
-                                <option value="Amazon Logistics UK">Amazon Logistics UK</option>
-                                <option value="Amazon Logistics US">Amazon Logistics US</option>
-                                <option value="Australia Post">Australia Post</option>
-                                <option value="Bluedart">Bluedart</option>
-                                <option value="Canada Post">Canada Post</option>
-                                <option value="China Post">China Post</option>
-                                <option value="Correios">Correios</option>
-                                <option value="DHL Express">DHL Express</option>
-                                <option value="DHL eCommerce">DHL eCommerce</option>
-                                <option value="DHL eCommerce Asia">DHL eCommerce Asia</option>
-                                <option value="DPD">DPD</option>
-                                <option value="DPD Local">DPD Local</option>
-                                <option value="DPD UK">DPD UK</option>
-                                <option value="Delhivery">Delhivery</option>
-                                <option value="Eagle">Eagle</option>
-                                <option value="FSC">FSC</option>
-                                <option value="FedEx">FedEx</option>
-                                <option value="FedEx UK">FedEx UK</option>
-                                <option value="GLS">GLS</option>
-                                <option value="Globegistics">Globegistics</option>
-                                <option value="Japan Post (EN)">Japan Post (EN)</option>
-                                <option value="Japan Post (JA)">Japan Post (JA)</option>
-                                <option value="La Poste">La Poste</option>
-                                <option value="New Zealand Post">New Zealand Post</option>
-                                <option value="Newgistics">Newgistics</option>
-                                <option value="PostNL">PostNL</option>
-                                <option value="PostNord">PostNord</option>
-                                <option value="Purolator">Purolator</option>
-                                <option value="Royal Mail">Royal Mail</option>
-                                <option value="SF Express">SF Express</option>
-                                <option value="Sagawa (EN)">Sagawa (EN)</option>
-                                <option value="Sagawa (JA)">Sagawa (JA)</option>
-                                <option value="Singapore Post">Singapore Post</option>
-                                <option value="TNT">TNT</option>
-                                <option value="UPS">UPS</option>
-                                <option value="USPS">USPS</option>
-                                <option value="Whistl">Whistl</option>
-                                <option value="Yamato (EN)">Yamato (EN)</option>
-                                <option value="Yamato (JA)">Yamato (JA)</option>
-                                <option value="Other">Other</option>
-                            </select>
+                            <input autocomplete="off" class="input form-control" ng-model="tracking.Carrier">
                         </span>
                     </div>
                 </div>

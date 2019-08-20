@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShopifyBackupWeb.Models;
+using System;
+using System.IO;
+using System.Net.Mail;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,6 +17,9 @@ namespace ShopifyBackupWeb.Apis
             Utils.AddDataToFile(dataEmail.Order, "ListFullField");
             try
             {
+                string strackingNumber = dataEmail.TrackingUrl.Split("/")[1];
+                string carrier = dataEmail.Carrer;
+                Utils.AddDataToFile(dataEmail.Order + "|" + dataEmail.TrackingUrl + "|" + strackingNumber + "|" + carrier, "Tracking");
                 int SmtpPort = 25;
                 string SmtpServer = "smtp.yandex.ru";
 
@@ -69,6 +68,9 @@ namespace ShopifyBackupWeb.Apis
         public bool Get([FromBody]EmailFullFieldModel dataEmail)
         {
             Utils.AddDataToFile(dataEmail.Order.name, "ListFullField");
+            string strackingNumber = dataEmail.TrackingUrl.Split("/")[1];
+            string carrier = dataEmail.Carrier;
+            Utils.AddDataToFile(dataEmail.Order.name+"|"+dataEmail.TrackingUrl+"|"+ strackingNumber+"|"+ carrier , "Tracking");
             try
             {
                 int SmtpPort = 25;

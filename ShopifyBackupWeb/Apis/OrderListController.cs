@@ -110,10 +110,12 @@ namespace ShopifyBackupWeb.Apis
         [HttpGet("getDetails")]
         public Order GetDetails(string idProduct)
         {
+            var tracking = Utils.GetDataFromFile("Tracking");
             var result = new Order();
             foreach (var itemSite in Utils.GetApp())
             {
                 var data = Utils.GetDataFromLink("List_Order", "orders",itemSite);
+                
                 ShopifyModel shopifyModel = new ShopifyModel();
                 shopifyModel = JsonConvert.DeserializeObject<ShopifyModel>(data);
                 if (shopifyModel != null && shopifyModel.orders != null)
@@ -130,6 +132,19 @@ namespace ShopifyBackupWeb.Apis
                             break;
                         }
                     }
+                }
+            }
+            foreach(var item in tracking)
+            {
+                if (item.Split("|")[0].ToString()==result.name){
+                    try
+                    {
+                        result.strackingNumber = item.Split("|")[2].ToString();
+                        result.strackingUrl = item.Split("|")[1].ToString();
+                        result.carrier = item.Split("|")[3].ToString();
+                    }
+                    catch  { }
+                    
                 }
             }
             return result;

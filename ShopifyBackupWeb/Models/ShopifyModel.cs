@@ -340,6 +340,9 @@ namespace ShopifyBackupWeb.Models
         public List<object> fulfillments { get; set; }
         public List<object> refunds { get; set; }
         public Customer customer { get; set; }
+        public string strackingNumber { get; set; }
+        public string strackingUrl { get; set; }
+        public string carrier { get; set; }
     }
 
     public class ShopifyModel

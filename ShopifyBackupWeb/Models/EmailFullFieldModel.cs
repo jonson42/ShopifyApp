@@ -10,6 +10,7 @@ namespace ShopifyBackupWeb.Models
         public Order Order { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        public string Carrier { get; set; }
         public List<LineItem> ListItem { get; set; }
         public string TrackingUrl { get; set; }
     }
