@@ -24,7 +24,7 @@ namespace ShopifyBackupWeb.Apis
             var listHost = JsonConvert.DeserializeObject<List<Models.ListHost>>(data);
             for(int i = 0; i < listHost.Count; i++)
             {
-                var link = listHost[i].Name + "/products/" + l;
+                var link = listHost[i].Name + "products/" + l;
                 var a = Utils.CheckLink(link);
                 
                 if (a)
@@ -42,7 +42,7 @@ namespace ShopifyBackupWeb.Apis
             var listHost = JsonConvert.DeserializeObject<List<Models.ListHost>>(data);
             for (int i = 0; i < listHost.Count; i++)
             {
-                var link = listHost[i].Name + "/collections" + l;
+                var link = listHost[i].Name + "collections" + l;
                 var a = Utils.CheckLink(link);
 
                 if (a)

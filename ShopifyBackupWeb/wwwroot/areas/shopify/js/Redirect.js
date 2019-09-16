@@ -52,6 +52,15 @@ app.service("$ajax", function ($http) {
         var temp = this.url + "updateEmailContacts";
         return $http.post(temp, itemEmail);
     };
+    //Shop name:
+    this.getShopName = function () {
+        var temp = this.url + "getShopName";
+        return $http.get(temp);
+    };
+    this.updateShopNameDefault = function (itemEmail) {
+        var temp = this.url + "updateShopNameDefault";
+        return $http.post(temp, itemEmail);
+    };
 });
 app.factory("$share", function ($rootScope) {
     return {
@@ -199,9 +208,26 @@ app.controller("mainCtr", function ($scope, $ajax) {
     };
     $scope.GetEmailContacts();
     $scope.SaveEmailContactsDefault = function () {
-
         $ajax.updateEmailContacts($scope.EmailContacts).then(function response(success) {
             alert("Save Email Contacts successfully !");
+        }, function error(error) {
+            alert("Save host error !");
+        });
+    };
+    //SaveShopNameDefault
+    $scope.GetShopName = function () {
+        $ajax.getShopName().then(function response(success) {
+            if (success.data !== "") {
+                $scope.shop = success.data;
+            }
+        }, function error(error) {
+            console.log("Export error !");
+        });
+    };
+    $scope.GetShopName();
+    $scope.SaveShopNameDefault = function () {
+        $ajax.updateShopNameDefault($scope.shop).then(function response(success) {
+            alert("Save Shop name successfully !");
         }, function error(error) {
             alert("Save host error !");
         });

@@ -32,5 +32,6 @@ namespace ShopifyBackupWeb.Models
         public string Tracking { get; set; }
         public string TrackingUrl { get; set; }
         public string Carrer { get; set; }
+        public string PaymentGateWay { get; set; }
     }
 }

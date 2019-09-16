@@ -17,6 +17,7 @@ namespace ShopifyBackupWeb
         public static EmailModel emailModel { get; set; }
         public static DNSModel dnsModel { get; set; }
         public static EmailContactsModel emailContacts { get; set; }
+        public static ShopNameModel shopName { get; set; }
         public static void SetEmailContacts()
         {
             var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\EmailContacts.json");
@@ -38,6 +39,16 @@ namespace ShopifyBackupWeb
             dnsModel = JsonConvert.DeserializeObject<DNSModel>(data);
         }
 
+        public static void updateShopNameDefault()
+        {
+            var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\ShopName.json");
+            var data = "";
+            if (System.IO.File.Exists(path))
+            {
+                data = System.IO.File.ReadAllText(path);
+            }
+            shopName = JsonConvert.DeserializeObject<ShopNameModel>(data);
+        }
         public static void SetEmail()
         {
             var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\Email.json");
@@ -50,11 +61,26 @@ namespace ShopifyBackupWeb
         }
         public static void SetProduct()
         {
+            if (productModel!=null&&productModel.products.Count > 0)
+            {
+                return;
+            }
+            var list = new ProductModel();
             foreach (var itemSite in Utils.GetApp())
             {
                 var product = Utils.GetDataFromLink("List_Product", "products", itemSite);
                 productModel = JsonConvert.DeserializeObject<ProductModel>(product);
+                if (list.products == null)
+                {
+                    list.products = productModel.products;
+                }
+                else
+                {
+                    list.products.AddRange(productModel.products);
+                }
+                
             }
+            productModel = list;
         }
         public static string GetImageUrl(string title,string varianId, ProductModel productModel)
         {
@@ -115,7 +141,7 @@ namespace ShopifyBackupWeb
                 string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(appModel.AppId + ":" + appModel.AppPass));
                 client.Headers[HttpRequestHeader.Authorization] = string.Format(
                     "Basic {0}", credentials);
-                data = client.DownloadString(String.Format("https://{0}.myshopify.com/admin/api/2019-07/{1}.json", appModel.Site, nameItem));
+                data = client.DownloadString(String.Format("https://{0}.myshopify.com/admin/api/2019-07/{1}.json?limit=250", appModel.Site, nameItem));
                 try
                 {
                     using (var tw = new StreamWriter(path, false))

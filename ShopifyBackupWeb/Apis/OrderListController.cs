@@ -27,7 +27,9 @@ namespace ShopifyBackupWeb.Apis
                 var product = Utils.GetDataFromLink("List_Product", "products", itemSite);
                 ShopifyModel shopifyModel = new ShopifyModel();
                 shopifyModel = JsonConvert.DeserializeObject<ShopifyModel>(data);
+                shopifyModel.orders.Reverse();
                 var productModel = JsonConvert.DeserializeObject<ProductModel>(product);
+                
                 if (shopifyModel!=null&&shopifyModel.orders != null)
                 {
                     foreach (var item in shopifyModel.orders)
@@ -68,28 +70,44 @@ namespace ShopifyBackupWeb.Apis
                         #region
                         foreach (var itemSub in item.line_items)
                         {
-                            var itemProduct = new ExcelExportModel();
-                            itemProduct.Image = Utils.GetImageUrl(itemSub.title, itemSub.variant_id.ToString(),Utils.productModel);
-                            itemProduct.Order = item.name;
-                            itemProduct.VariantTitle = itemSub.variant_title != null ? itemSub.variant_title : "";
-                            itemProduct.Price = itemSub.price != null ? itemSub.price : "";
-                            itemProduct.TotalPrice = itemSub.price != null ? itemSub.price : "";
-                            itemProduct.Quantity = itemSub.quantity != 0 ? itemSub.quantity.ToString() : "";
-                            itemProduct.Phone = item.phone != null ? item.phone.ToString() : "";
-                            itemProduct.SKU = itemSub.sku != null ? itemSub.sku : "";
-                            itemProduct.EMail = item.email != null ? item.email : "";
-                            itemProduct.ProductName = itemSub.name != null ? itemSub.name : "";
-                            itemProduct.OrderNotes = item.note != null ? item.note : "";
-                            itemProduct.City = item.shipping_address != null ? item.shipping_address.ToString() : "";
-                            itemProduct.Country = item.shipping_address != null ? item.shipping_address.country : "";
-                            itemProduct.Province = item.shipping_address != null ? item.shipping_address.province : "";
-                            itemProduct.Zip = item.shipping_address != null ? item.shipping_address.zip : "";
-                            itemProduct.Address = item.shipping_address != null ? item.shipping_address.address1 : "";
-                            itemProduct.ShippingFullname = item.shipping_address != null && item.shipping_address.last_name != null ? item.shipping_address.first_name + item.shipping_address.last_name : "";
-                            itemProduct.ProvinceCode = item.shipping_address != null ? item.shipping_address.province_code : "";
-                            itemProduct.AddressFull = item.shipping_address != null && item.shipping_address.address2 != null ? item.shipping_address.address1 + item.shipping_address.address2 : "";
-                            itemProduct.CountryCode = item.shipping_address != null ? item.shipping_address.country : "";
-                            orderModel.listProduct.Add(itemProduct);
+                            try
+                            {
+                                var itemProduct = new ExcelExportModel();
+                                itemProduct.Image = Utils.GetImageUrl(itemSub.title, itemSub.variant_id.ToString(), Utils.productModel);
+                                itemProduct.Order = item.name;
+                                itemProduct.VariantTitle = itemSub.variant_title != null ? itemSub.variant_title : "";
+                                itemProduct.Price = itemSub.price != null ? itemSub.price : "";
+                                itemProduct.TotalPrice = itemSub.price != null ? itemSub.price : "";
+                                itemProduct.Quantity = itemSub.quantity != 0 ? itemSub.quantity.ToString() : "";
+                                itemProduct.Phone = item.shipping_address != null ? item.shipping_address.phone.ToString() : "";
+                                itemProduct.SKU = itemSub.sku != null ? itemSub.sku : "";
+                                itemProduct.EMail = item.email != null ? item.email : "";
+                                itemProduct.ProductName = itemSub.name != null ? itemSub.name : "";
+                                itemProduct.OrderNotes = item.note != null ? item.note : "";
+                                try
+                                {
+                                    itemProduct.City = item.shipping_address != null ? item.shipping_address.city.ToString() : "";
+                                }
+                                catch
+                                {
+
+                                }
+
+                                itemProduct.Country = item.shipping_address != null ? item.shipping_address.country : "";
+                                itemProduct.Province = item.shipping_address != null ? item.shipping_address.province : "";
+                                itemProduct.Zip = item.shipping_address != null ? item.shipping_address.zip : "";
+                                itemProduct.Address = item.shipping_address != null ? item.shipping_address.address1 : "";
+                                itemProduct.ShippingFullname = item.shipping_address != null && item.shipping_address.last_name != null ? item.shipping_address.first_name + item.shipping_address.last_name : "";
+                                itemProduct.ProvinceCode = item.shipping_address != null ? item.shipping_address.province_code : "";
+                                itemProduct.AddressFull = item.shipping_address != null && item.shipping_address.address2 != null ? item.shipping_address.address1 + item.shipping_address.address2 : "";
+                                itemProduct.CountryCode = item.shipping_address != null ? item.shipping_address.country : "";
+                                orderModel.listProduct.Add(itemProduct);
+                            }
+                            catch
+                            {
+
+                            }
+                           
                         }
 
                         #endregion
@@ -100,12 +118,18 @@ namespace ShopifyBackupWeb.Apis
                 
             }
             int Stt = listOrder.Count;
-            foreach(var item in listOrder)
+            //foreach(var item in listOrder)
+            //{
+            //    item.Stt = Stt.ToString();
+            //    Stt--;
+            //}
+            var listTemp =new List<OrderModel>();
+            for(int i = Stt; i > 0&&i!=0; i--)
             {
-                item.Stt = Stt.ToString();
-                Stt--;
+                listOrder[i-1].Stt = i.ToString();
+                listTemp.Add(listOrder[i-1]);
             }
-            return listOrder;
+            return listTemp;
         }
         [HttpGet("getDetails")]
         public Order GetDetails(string idProduct)
@@ -127,6 +151,10 @@ namespace ShopifyBackupWeb.Apis
                             foreach (var itemSub in item.line_items)
                             {
                                 itemSub.image = Utils.GetImageUrl(itemSub.title, itemSub.variant_id.ToString(),Utils.productModel);
+                                if (String.IsNullOrEmpty(itemSub.image))
+                                {
+                                    break;
+                                }
                             }
                             result = item;
                             break;

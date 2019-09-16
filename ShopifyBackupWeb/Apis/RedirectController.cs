@@ -173,5 +173,20 @@ namespace ShopifyBackupWeb.Apis
             Utils.SetDnsModel();
             return "true";
         }
+        //Update hostName 
+        [HttpGet("getShopName")]
+        public ShopNameModel getShopName()
+        {
+            Utils.updateShopNameDefault();
+            return Utils.shopName;
+        }
+        [HttpPost("updateShopNameDefault")]
+        public string updateShopNameDefault([FromBody]ShopNameModel inparam)
+        {
+            UpdateFile(inparam, "ShopName");
+            Utils.updateShopNameDefault();
+            return "true";
+        }
+
     }
 }

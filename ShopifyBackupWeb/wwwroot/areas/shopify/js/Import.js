@@ -59,14 +59,10 @@ $scope.listExcel =[];
             Order: $scope.itemDetails
         };
         $ajax.sendEmailFullFieldImport(dataEmail).then(function response(success) {
-            debugger;
+            alert("Fullfield successfully !");
+            $scope.listExcel = [];
         }, function error(error) {
-            console.log("Roi roi do");
-        });
-    };
-    $scope.MarkFullField = function () {
-        angular.forEach($scope.listExcel, function (item) {
-
+                alert("Fullfield error !");
         });
     };
     

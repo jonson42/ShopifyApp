@@ -137,22 +137,23 @@ namespace ShopifyBackupWeb.Apis
                             {
                                 excelItem.TransactionCard = worksheet.Cells[i, 21].Value.ToString();
                             }
-                            if (worksheet.Cells[i, 20].Value != null)
-                            {
-                                excelItem.PayPalTransactionId = worksheet.Cells[i, 20].Value.ToString();
-                            }
                             if (worksheet.Cells[i, 22].Value != null)
                             {
-                                excelItem.Tracking = worksheet.Cells[i, 22].Value.ToString();
+                                excelItem.PayPalTransactionId = worksheet.Cells[i, 22].Value.ToString();
                             }
                             if (worksheet.Cells[i, 23].Value != null)
                             {
-                                excelItem.TrackingUrl = worksheet.Cells[i, 23].Value.ToString();
+                                excelItem.Tracking = worksheet.Cells[i, 23].Value.ToString();
                             }
                             if (worksheet.Cells[i, 24].Value != null)
                             {
-                                excelItem.Carrer = worksheet.Cells[i, 24].Value.ToString();
+                                excelItem.TrackingUrl = worksheet.Cells[i, 24].Value.ToString();
                             }
+                            if (worksheet.Cells[i, 25].Value != null)
+                            {
+                                excelItem.Carrer = worksheet.Cells[i, 25].Value.ToString();
+                            }
+                            
                             list.Add(excelItem);
                         }
 

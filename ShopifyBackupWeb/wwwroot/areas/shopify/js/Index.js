@@ -79,7 +79,7 @@ app.controller("mainCtr", function ($scope, $ajax) {
                 var startIndex = $scope.search.value.split("->")[0];
                 var endIndex = $scope.search.value.split("->")[1];
                 angular.forEach($scope.listOrder, function (item) {
-                    if (item.stt >= startIndex && item.stt <= endIndex) {
+                    if (parseInt(item.stt) >= parseInt(startIndex) && parseInt(item.stt) <= parseInt(endIndex)) {
                         check.push(item);
                     }
                 });

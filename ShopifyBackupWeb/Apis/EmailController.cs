@@ -31,11 +31,13 @@ namespace ShopifyBackupWeb.Apis
 
                 EmailMsg.Subject = String.Format("A shipment from order {0} is on the way", dataEmail.Order);
                 var data = "";
-                data = data + "<hr/><div><img style='width: 73px; height: 76px;' src='" + dataEmail.Image + "'/>" + dataEmail.Order + " x " + dataEmail.Quantity + "<div><hr/>";
+                data = data + "<hr/><div><img style='width: 73px; height: 76px;' src='" + dataEmail.Image + "'/><span>" + dataEmail.Order + " x " + dataEmail.Quantity + "</span><div><hr/>";
                 var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\shipment_confirm.html");
                 var dataHtml = System.IO.File.ReadAllText(path);
                 //StringBuilder stringBuilder = new StringBuilder();
-                var boday = dataHtml.Replace("{sp}", data);
+                dataHtml = dataHtml.Replace("{sp}", data);
+                var vendor = Utils.shopName.Name;
+                var boday = dataHtml.Replace("{vendor}", vendor);
                 var linkDetails = dataEmail.TrackingUrl;
                 boday = boday.Replace("{linkCollection}", Utils.dnsModel.Name + "/collections");
                 boday = boday.Replace("{linkDetails}", linkDetails);
@@ -84,21 +86,25 @@ namespace ShopifyBackupWeb.Apis
 
                 EmailMsg.Subject = String.Format("A shipment from order {0} is on the way", dataEmail.Name);
                 var data = "";
-                foreach(var item in dataEmail.ListItem)
+                var vendor = Utils.shopName.Name;
+                foreach (var item in dataEmail.ListItem)
                 {
+                    vendor=item.vendor;
                     if (data == "")
                     {
-                        data = data + "<div><img  style='width: 73px; height: 76px;' src='" + item.image + "'/>" + item.name + " x " + item.quantity + "<div>";
+                        data = data + "<div><img  style='width: 73px; height: 76px;' src='" + item.image + "'/><span>" + item.name + " x " + item.quantity + "</span><div>";
                     }
                     else
                     {
-                        data = data + "<hr/><div><img  style='width: 73px; height: 76px;' src='" + item.image + "'/>" + item.name + " x " + item.quantity + "<div>";
+                        data = data + "<hr/><div><img  style='width: 73px; height: 76px;' src='" + item.image + "'/><span>" + item.name + " x " + item.quantity + "</span><div>";
                     }
                 }
                 var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\shipment_confirm.html");
                 var dataHtml = System.IO.File.ReadAllText(path);
                 //StringBuilder stringBuilder = new StringBuilder();
-                var boday = dataHtml.Replace("{sp}", data);
+                dataHtml = dataHtml.Replace("{sp}", data);
+                var boday = dataHtml.Replace("{vendor}", vendor);
+                
                 var linkDetails =dataEmail.TrackingUrl;
                 boday = boday.Replace("{linkDetails}", linkDetails);
                 boday = boday.Replace("{linkCollection}", Utils.dnsModel.Name+"/collections");

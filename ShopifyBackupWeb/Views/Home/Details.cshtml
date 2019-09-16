@@ -10,8 +10,9 @@
 
 }
 <div ng-controller="detailsCtr" ng-app="crewcloud" >
-    <div class="row mb-4">
-    <a href="~/Home/Refund?id={{orderId}}" class="float-lg-right "><i class="fa fa-reply"></i>Refund</a>
+    <div class="mb-4">
+    <a href="~/Home/Refund?id={{orderId}}" class="float-lg-left "><i class="fa fa-reply"></i>Refund</a>
+   <br/><span>{{itemDetails.name}}</span>
     </div>
     <div class="row">
         <label>{{itemDetails.carrier}}</label><a href="{{itemDetails.strackingUrl}}" class="float-lg-right ml-4"><i class="fa fa-reply"></i>{{itemDetails.strackingNumber}}</a>
