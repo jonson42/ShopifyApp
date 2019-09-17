@@ -52,18 +52,22 @@ $scope.listExcel =[];
         $scope.trackingNumber = "";
         $scope.trackingCarrier = "";
         $scope.trackingUrl = "";
-        var dataEmail = {
-            name: $scope.itemDetails.name,
-            email: $scope.itemDetails.email,
-            listItem: $scope.itemDetails.line_items,
-            Order: $scope.itemDetails
-        };
-        $ajax.sendEmailFullFieldImport(dataEmail).then(function response(success) {
-            alert("Fullfield successfully !");
-            $scope.listExcel = [];
-        }, function error(error) {
+        //var dataEmail = {
+        //    name: $scope.itemDetails.name,
+        //    email: $scope.itemDetails.email,
+        //    listItem: $scope.itemDetails.line_items,
+        //    Order: $scope.itemDetails
+        //};
+        angular.forEach($scope.listExcel, function (item) {
+            $ajax.sendEmailFullFieldImport(item).then(function response(success) {
+               
+            }, function error(error) {
                 alert("Fullfield error !");
+            });
         });
+        alert("Fullfield successfully !");
+        $scope.listExcel = [];
+        
     };
     
 

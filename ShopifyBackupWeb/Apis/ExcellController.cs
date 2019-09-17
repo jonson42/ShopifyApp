@@ -49,7 +49,7 @@ namespace ShopifyBackupWeb.Apis
                 {
                     if (worksheet.Name == "Data")
                     {
-                        for (var i=2;i< worksheet.Dimension.End.Row;i++)
+                        for (var i=2;i<= worksheet.Dimension.End.Row;i++)
                         {
                             ExcelExportModel excelItem = new ExcelExportModel();
                             if (worksheet.Cells[i, 1].Value != null)

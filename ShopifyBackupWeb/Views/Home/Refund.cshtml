@@ -47,14 +47,14 @@
         </div>
         <div class="widget-content col-md-4">
             <h6>Summary</h6>
+            @*<p>Items subtotal<span>{{rate}}</span></p>
             <p>Items subtotal<span>{{rate}}</span></p>
             <p>Items subtotal<span>{{rate}}</span></p>
-            <p>Items subtotal<span>{{rate}}</span></p>
-            <p>Items subtotal<span>{{rate}}</span></p>
+            <p>Items subtotal<span>{{rate}}</span></p>*@
             <h6>REFUND AMOUNT</h6>
             <p>sTRIPE</p>
             <input class="form-control" ng-model="moneyRefund" />
-            <span>{{}}available for refund</span>
+            <span>${{itemDetails.total_price}}available for refund</span>
             <div>
                 <button class="btn btn-primary" ng-click="SendRefunds()" ng-disabled="flagRefunds" >Refunds ${{moneyRefund}}</button>
             </div>

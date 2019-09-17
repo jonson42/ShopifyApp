@@ -17,7 +17,11 @@ namespace ShopifyBackupWeb.Apis
             Utils.AddDataToFile(dataEmail.Order, "ListFullField");
             try
             {
-                string strackingNumber = dataEmail.TrackingUrl.Split("/")[1];
+                if (Utils.shopName == null)
+                {
+                    Utils.updateShopNameDefault();
+                }
+                string strackingNumber = dataEmail.TrackingUrl;
                 string carrier = dataEmail.Carrer;
                 Utils.AddDataToFile(dataEmail.Order + "|" + dataEmail.TrackingUrl + "|" + strackingNumber + "|" + carrier, "Tracking");
                 int SmtpPort = 25;
@@ -89,7 +93,7 @@ namespace ShopifyBackupWeb.Apis
                 var vendor = Utils.shopName.Name;
                 foreach (var item in dataEmail.ListItem)
                 {
-                    vendor=item.vendor;
+                    vendor=Utils.shopName.Name;
                     if (data == "")
                     {
                         data = data + "<div><img  style='width: 73px; height: 76px;' src='" + item.image + "'/><span>" + item.name + " x " + item.quantity + "</span><div>";
@@ -139,6 +143,10 @@ namespace ShopifyBackupWeb.Apis
         {
             try
             {
+                if (Utils.shopName == null)
+                {
+                    Utils.updateShopNameDefault();
+                }
                 int SmtpPort = 25;
                 string SmtpServer = "smtp.yandex.ru";
                 string dataStr = "";
