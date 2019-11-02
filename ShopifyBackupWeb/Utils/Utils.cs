@@ -160,6 +160,48 @@ namespace ShopifyBackupWeb
             
             return data;
         }
+        public static string GetDataFromLinkForOrder(string fileName, string nameItem, ListSite appModel)
+        {
+            var directory = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot") + String.Format("\\Data\\{0}", appModel.Site);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+            var path = directory + String.Format("\\{0}.json", fileName);
+            if (!File.Exists(path))
+            {
+                File.Create(path).Close();
+
+            }
+            var data = "";
+            try
+            {
+                WebClient client = new WebClient();
+                client.UseDefaultCredentials = true;
+
+                client.Credentials = new NetworkCredential(appModel.AppId, appModel.AppPass);
+                string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(appModel.AppId + ":" + appModel.AppPass));
+                client.Headers[HttpRequestHeader.Authorization] = string.Format(
+                    "Basic {0}", credentials);
+                data = client.DownloadString(String.Format("https://{0}.myshopify.com/admin/api/2019-07/{1}.json?limit=250", appModel.Site, nameItem));
+                try
+                {
+                    using (var tw = new StreamWriter(path, false))
+                    {
+                        tw.WriteLine(data);
+                        tw.Close();
+                    }
+                }
+                catch { }
+
+            }
+            catch (Exception ex)
+            {
+                data = System.IO.File.ReadAllText(path);
+            }
+
+            return data;
+        }
         public static bool CheckLink(string link)
         {
             bool result = false;

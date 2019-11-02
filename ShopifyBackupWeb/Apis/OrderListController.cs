@@ -18,18 +18,17 @@ namespace ShopifyBackupWeb.Apis
         [HttpGet("getShopify")]
         public List<OrderModel> Get()
         {
+            List<string> listFullField = Utils.GetDataFromFile("ListFullField");
+            List<string> listRefunds = Utils.GetDataFromFile("Refunds");
             Utils.SetProduct();
             var listOrder = new List<OrderModel>();
             //int Stt = 1;
             foreach(var itemSite in Utils.GetApp())
             {
                 var data = Utils.GetDataFromLink("List_Order", "orders",itemSite);
-                var product = Utils.GetDataFromLink("List_Product", "products", itemSite);
                 ShopifyModel shopifyModel = new ShopifyModel();
                 shopifyModel = JsonConvert.DeserializeObject<ShopifyModel>(data);
                 shopifyModel.orders.Reverse();
-                var productModel = JsonConvert.DeserializeObject<ProductModel>(product);
-                
                 if (shopifyModel!=null&&shopifyModel.orders != null)
                 {
                     foreach (var item in shopifyModel.orders)
@@ -46,7 +45,8 @@ namespace ShopifyBackupWeb.Apis
                         orderModel.Customer = item.customer != null && item.customer.first_name != null ? item.customer.first_name.ToString() : "";
                         orderModel.Payment = item.financial_status != null ? item.financial_status : "";
                         orderModel.Fulfillment = "UnFullField";
-                        foreach (var itemFullField in Utils.GetDataFromFile("ListFullField")) {
+                      
+                        foreach (var itemFullField in listFullField) {
                             if (orderModel.Order == itemFullField)
                             {
                                 orderModel.Fulfillment = "FullField";
@@ -54,7 +54,7 @@ namespace ShopifyBackupWeb.Apis
                             }
                         }
 
-                        foreach(var itemRefunds in Utils.GetDataFromFile("Refunds"))
+                        foreach(var itemRefunds in listRefunds)
                         {
                             var check = itemRefunds.Split("~");
                             if (orderModel.Order == check[0])
@@ -77,7 +77,7 @@ namespace ShopifyBackupWeb.Apis
                                 itemProduct.Order = item.name;
                                 itemProduct.VariantTitle = itemSub.variant_title != null ? itemSub.variant_title : "";
                                 itemProduct.Price = itemSub.price != null ? itemSub.price : "";
-                                itemProduct.TotalPrice = itemSub.price != null ? itemSub.price : "";
+                                itemProduct.TotalPrice = item.total_price != null ? item.total_price : "";
                                 itemProduct.Quantity = itemSub.quantity != 0 ? itemSub.quantity.ToString() : "";
                                 itemProduct.Phone = item.shipping_address != null ? item.shipping_address.phone.ToString() : "";
                                 itemProduct.SKU = itemSub.sku != null ? itemSub.sku : "";
@@ -100,7 +100,7 @@ namespace ShopifyBackupWeb.Apis
                                 itemProduct.ShippingFullname = item.shipping_address != null && item.shipping_address.last_name != null ? item.shipping_address.first_name + item.shipping_address.last_name : "";
                                 itemProduct.ProvinceCode = item.shipping_address != null ? item.shipping_address.province_code : "";
                                 itemProduct.AddressFull = item.shipping_address != null && item.shipping_address.address2 != null ? item.shipping_address.address1 + item.shipping_address.address2 : "";
-                                itemProduct.CountryCode = item.shipping_address != null ? item.shipping_address.country : "";
+                                itemProduct.CountryCode = item.shipping_address != null ? item.shipping_address.country_code : "";
                                 orderModel.listProduct.Add(itemProduct);
                             }
                             catch

@@ -79,9 +79,9 @@ D:\Code\App\ShopifyApp\ShopifyBackupWeb\bin\x64\Debug\netcoreapp2.2\ShopifyBacku
 D:\Code\App\ShopifyApp\ShopifyBackupWeb\bin\x64\Debug\netcoreapp2.2\ShopifyBackupWeb.runtimeconfig.dev.json
 D:\Code\App\ShopifyApp\ShopifyBackupWeb\bin\x64\Debug\netcoreapp2.2\ShopifyBackupWeb.dll
 D:\Code\App\ShopifyApp\ShopifyBackupWeb\bin\x64\Debug\netcoreapp2.2\ShopifyBackupWeb.pdb
-D:\Code\App\ShopifyApp\ShopifyBackupWeb\obj\x64\Debug\netcoreapp2.2\ShopifyBackupWeb.csprojAssemblyReference.cache
 D:\Code\App\ShopifyApp\ShopifyBackupWeb\obj\x64\Debug\netcoreapp2.2\ShopifyBackupWeb.csproj.CoreCompileInputs.cache
 D:\Code\App\ShopifyApp\ShopifyBackupWeb\obj\x64\Debug\netcoreapp2.2\ShopifyBackupWeb.AssemblyInfoInputs.cache
 D:\Code\App\ShopifyApp\ShopifyBackupWeb\obj\x64\Debug\netcoreapp2.2\ShopifyBackupWeb.AssemblyInfo.cs
 D:\Code\App\ShopifyApp\ShopifyBackupWeb\obj\x64\Debug\netcoreapp2.2\ShopifyBackupWeb.dll
 D:\Code\App\ShopifyApp\ShopifyBackupWeb\obj\x64\Debug\netcoreapp2.2\ShopifyBackupWeb.pdb
+D:\Code\App\ShopifyApp\ShopifyBackupWeb\obj\x64\Debug\netcoreapp2.2\ShopifyBackupWeb.csprojAssemblyReference.cache

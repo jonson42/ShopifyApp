@@ -1,0 +1,49 @@
+<html>
+<head>
+    <style>
+        .button {
+            font-size: 16px;
+            text-decoration: none;
+            display: block;
+            color: #fff;
+            padding: 20px 25px;
+            background: #15c;
+            border:lightsalmon;
+            width:30%;
+        }
+    </style>
+</head>
+  <center>
+      <div>
+          <h1>
+          </h1>
+          <h2>
+              Your order has been refunded
+          </h2>
+		  <p>
+		      Total amount refunded: ${moneyRefund}
+		  </p>
+      </div>
+       <hr/>
+	   <h1>Order summary</h1>
+	    {sp}
+		<div>
+		     <span style="margin-right:10px">Subtotal</span><label>${subTotal}</label>
+		</div>
+		<div>
+		     <span style="margin-right:10px">Shipping</span><label>${shipping}</label>
+		</div>
+		<hr/>
+		<div>
+		     <span style="margin-right:10px">Total</span><label>${total}</label>
+		</div>
+		<div>
+		     <span style="margin-right:10px">Manual</span><label>${manual}</label>
+		</div>
+		<div>
+		     <span style="margin-right:10px">Manual Refund</span><label>-${manualRefund}</label>
+		</div>
+	  <hr/>
+	  <p>If you have any questions, reply to this email or contact us at {email}</p>
+  </center>
+</html>

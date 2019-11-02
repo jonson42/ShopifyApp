@@ -58,12 +58,14 @@ $scope.listExcel =[];
         //    listItem: $scope.itemDetails.line_items,
         //    Order: $scope.itemDetails
         //};
+        var listItem = [];
         angular.forEach($scope.listExcel, function (item) {
-            $ajax.sendEmailFullFieldImport(item).then(function response(success) {
-               
-            }, function error(error) {
-                alert("Fullfield error !");
-            });
+            listItem.push(item);
+        });
+        $ajax.sendEmailFullFieldImport(listItem).then(function response(success) {
+
+        }, function error(error) {
+            alert("Fullfield error !");
         });
         alert("Fullfield successfully !");
         $scope.listExcel = [];

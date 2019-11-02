@@ -84,7 +84,7 @@ namespace ShopifyBackupWeb.Models
         public DateTime created_at { get; set; }
         public string handle { get; set; }
         public DateTime updated_at { get; set; }
-        public DateTime published_at { get; set; }
+        public string published_at { get; set; }
         public string template_suffix { get; set; }
         public string tags { get; set; }
         public string published_scope { get; set; }

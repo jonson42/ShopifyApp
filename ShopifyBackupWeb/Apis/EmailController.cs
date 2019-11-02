@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShopifyBackupWeb.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
 
@@ -12,61 +13,63 @@ namespace ShopifyBackupWeb.Apis
     public class EmailController : Controller
     {
         [HttpPost("sendEmailFullFieldImport")]
-        public bool Get([FromBody]ExcelExportModel dataEmail)
+        public bool Get([FromBody]List<ExcelExportModel> listData)
         {
-            Utils.AddDataToFile(dataEmail.Order, "ListFullField");
-            try
+            foreach(var dataEmail in listData)
             {
-                if (Utils.shopName == null)
+                Utils.AddDataToFile(dataEmail.Order, "ListFullField");
+                try
                 {
-                    Utils.updateShopNameDefault();
+                    if (Utils.shopName == null)
+                    {
+                        Utils.updateShopNameDefault();
+                    }
+                    string strackingNumber = dataEmail.TrackingUrl;
+                    string carrier = dataEmail.Carrer;
+                    Utils.AddDataToFile(dataEmail.Order + "|" + dataEmail.TrackingUrl + "|" + strackingNumber + "|" + carrier, "Tracking");
+                    int SmtpPort = 25;
+                    string SmtpServer = "smtp.yandex.ru";
+
+                    MailMessage EmailMsg = new MailMessage();
+
+                    EmailMsg.From = new MailAddress(Utils.emailModel.EmailSend, Utils.emailModel.Host);
+                    EmailMsg.To.Add(dataEmail.EMail);
+                    //EmailMsg.ReplyToList.Add("info@do main.com");
+
+                    EmailMsg.Subject = String.Format("A shipment from order {0} is on the way", dataEmail.Order);
+                    var data = "";
+                    data = data + "<hr/><div><img style='width: 73px; height: 76px;' src='" + dataEmail.Image + "'/><span>" + dataEmail.Order + " x " + dataEmail.Quantity + "</span><div><hr/>";
+                    var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\shipment_confirm.html");
+                    var dataHtml = System.IO.File.ReadAllText(path);
+                    //StringBuilder stringBuilder = new StringBuilder();
+                    dataHtml = dataHtml.Replace("{sp}", data);
+                    var vendor = Utils.shopName.Name;
+                    var boday = dataHtml.Replace("{vendor}", vendor);
+                    var linkDetails = dataEmail.TrackingUrl;
+                    boday = boday.Replace("{linkCollection}", Utils.dnsModel.Name + "/collections");
+                    boday = boday.Replace("{linkDetails}", linkDetails);
+                    boday = boday.Replace("{email}", Utils.emailContacts.Name);
+                    //String.Format(dataHtml, data); //stringBuilder.Append(String.Format(dataHtml, data));
+                    EmailMsg.Body = boday.ToString();
+
+                    EmailMsg.IsBodyHtml = true;
+                    EmailMsg.Priority = MailPriority.Normal;
+
+                    System.Net.Mail.SmtpClient SMTP = new System.Net.Mail.SmtpClient();
+                    SMTP.Host = SmtpServer;
+                    SMTP.Port = SmtpPort;
+                    SMTP.EnableSsl = true;
+                    SMTP.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                    SMTP.UseDefaultCredentials = false;
+                    SMTP.Credentials = new System.Net.NetworkCredential(Utils.emailModel.EmailSend, Utils.emailModel.PassSend);
+
+                    SMTP.Send(EmailMsg);
                 }
-                string strackingNumber = dataEmail.TrackingUrl;
-                string carrier = dataEmail.Carrer;
-                Utils.AddDataToFile(dataEmail.Order + "|" + dataEmail.TrackingUrl + "|" + strackingNumber + "|" + carrier, "Tracking");
-                int SmtpPort = 25;
-                string SmtpServer = "smtp.yandex.ru";
-
-                MailMessage EmailMsg = new MailMessage();
-
-                EmailMsg.From = new MailAddress(Utils.emailModel.EmailSend, Utils.emailModel.Host);
-                EmailMsg.To.Add(dataEmail.EMail);
-                //EmailMsg.ReplyToList.Add("info@do main.com");
-
-                EmailMsg.Subject = String.Format("A shipment from order {0} is on the way", dataEmail.Order);
-                var data = "";
-                data = data + "<hr/><div><img style='width: 73px; height: 76px;' src='" + dataEmail.Image + "'/><span>" + dataEmail.Order + " x " + dataEmail.Quantity + "</span><div><hr/>";
-                var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + "\\Data\\shipment_confirm.html");
-                var dataHtml = System.IO.File.ReadAllText(path);
-                //StringBuilder stringBuilder = new StringBuilder();
-                dataHtml = dataHtml.Replace("{sp}", data);
-                var vendor = Utils.shopName.Name;
-                var boday = dataHtml.Replace("{vendor}", vendor);
-                var linkDetails = dataEmail.TrackingUrl;
-                boday = boday.Replace("{linkCollection}", Utils.dnsModel.Name + "/collections");
-                boday = boday.Replace("{linkDetails}", linkDetails);
-                boday = boday.Replace("{email}", Utils.emailContacts.Name);
-                //String.Format(dataHtml, data); //stringBuilder.Append(String.Format(dataHtml, data));
-                EmailMsg.Body = boday.ToString();
-
-                EmailMsg.IsBodyHtml = true;
-                EmailMsg.Priority = MailPriority.Normal;
-
-                System.Net.Mail.SmtpClient SMTP = new System.Net.Mail.SmtpClient();
-                SMTP.Host = SmtpServer;
-                SMTP.Port = SmtpPort;
-                SMTP.EnableSsl = true;
-                SMTP.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
-                SMTP.UseDefaultCredentials = false;
-                SMTP.Credentials = new System.Net.NetworkCredential(Utils.emailModel.EmailSend, Utils.emailModel.PassSend);
-
-                SMTP.Send(EmailMsg);
+                catch (Exception ex)
+                {
+                    return false;
+                }
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
-
             return true;
         }
 
