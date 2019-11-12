@@ -32,7 +32,9 @@ namespace ShopifyBackupWeb.Apis
                     return Redirect(link);
                 }
             }
-            return Redirect("https://www.google.com/");
+            RedirectController redirectController = new RedirectController();
+            var linkCall = redirectController.getLinkCallName();
+            return Redirect(linkCall.Name);
         }
         [HttpGet("collections")]
         public RedirectResult shortLinkCollection(string l)

@@ -261,6 +261,27 @@ namespace ShopifyBackupWeb
             
             return true;
         }
-        
+
+        //Link call name :
+        public static NameModel getNameModel(String fileName)
+        {
+            var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + String.Format("\\Data\\{0}.json",fileName));
+            var data = "";
+            if (System.IO.File.Exists(path))
+            {
+                data = System.IO.File.ReadAllText(path);
+            }
+            var result = JsonConvert.DeserializeObject<NameModel>(data);
+            return result;
+        }
+        public static void setNameModel(String fileName)
+        {
+            var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + String.Format("\\Data\\{0}.json",fileName));
+            var data = "";
+            if (System.IO.File.Exists(path))
+            {
+                data = System.IO.File.ReadAllText(path);
+            }
+        }
     }
 }

@@ -188,5 +188,17 @@ namespace ShopifyBackupWeb.Apis
             return "true";
         }
 
+        //Update call Name 
+        [HttpGet("getLinkCallName")]
+        public NameModel getLinkCallName()
+        {
+            return Utils.getNameModel("LinkCall");
+        }
+        [HttpPost("updateLinkCallDefault")]
+        public void updateLinkCallDefault([FromBody]ShopNameModel inparam)
+        {
+            UpdateFile(inparam, "LinkCall");
+        }
+
     }
 }

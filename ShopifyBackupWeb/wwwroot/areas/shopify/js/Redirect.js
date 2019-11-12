@@ -61,6 +61,16 @@ app.service("$ajax", function ($http) {
         var temp = this.url + "updateShopNameDefault";
         return $http.post(temp, itemEmail);
     };
+    //Call name: 
+    this.getLinkCallName = function () {
+        var temp = this.url + "getLinkCallName";
+        return $http.get(temp);
+    };
+    this.updateLinkCallDefault = function (itemCallName) {
+        var temp = this.url + "updateLinkCallDefault";
+        return $http.post(temp, itemCallName);
+    };
+    
 });
 app.factory("$share", function ($rootScope) {
     return {
@@ -230,6 +240,25 @@ app.controller("mainCtr", function ($scope, $ajax) {
             alert("Save Shop name successfully !");
         }, function error(error) {
             alert("Save host error !");
+        });
+    };
+
+    //Save link auto call
+    $scope.GetLinkCallName = function () {
+        $ajax.getLinkCallName().then(function response(success) {
+            if (success.data !== "") {
+                $scope.link = success.data;
+            }
+        }, function error(error) {
+            console.log("Export error !");
+        });
+    };
+    $scope.GetLinkCallName();
+    $scope.SaveLinkCallDefault = function () {
+        $ajax.updateLinkCallDefault($scope.link).then(function response(success) {
+            alert("Save Link Call successfully !");
+        }, function error(error) {
+                alert("Save LinkCall error !");
         });
     };
 });
